@@ -72,12 +72,12 @@ if command -v jq &>/dev/null && [[ -f "$WORKSPACE_SETTINGS" ]]; then
   jq --arg p "$TARGET_PYTHON" \
      '. + { "python.defaultInterpreterPath": $p }' \
      "$WORKSPACE_SETTINGS" > "$tmp" && mv "$tmp" "$WORKSPACE_SETTINGS"
-else
-  cat > "$WORKSPACE_SETTINGS" <<EOF
-{
-  "python.defaultInterpreterPath": "$TARGET_PYTHON"
-}
-EOF
+# else
+#   cat > "$WORKSPACE_SETTINGS" <<EOF
+# {
+#   "python.defaultInterpreterPath": "$TARGET_PYTHON"
+# }
+# EOF
 fi
 
 
