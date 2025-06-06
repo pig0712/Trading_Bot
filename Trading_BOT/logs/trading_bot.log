@@ -1,0 +1,88 @@
+2025-06-04 13:45:43,711 - __main__                  - INFO     - main.py:69 - Successfully loaded environment variables from /workspaces/Trading_Bot/Trading_BOT/.env
+2025-06-04 13:45:43,711 - __main__                  - INFO     - main.py:73 - Successfully added /workspaces/Trading_Bot/Trading_BOT/src to sys.path
+2025-06-04 13:45:43,711 - __main__                  - INFO     - main.py:75 - Logging initialized. Application log level set to: INFO (20). Log file: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-06-04 13:45:43,711 - __main__                  - INFO     - main.py:97 - Trading_BOT/main.py executed as script. Current working directory: /workspaces/Trading_Bot/Trading_BOT
+2025-06-04 13:45:43,864 - __main__                  - INFO     - main.py:86 - Invoking trading_bot.cli.main command...
+2025-06-04 13:45:43,865 - trading_bot.cli           - INFO     - cli.py:726 - ========== 자동매매 봇 CLI 시작 ==========
+2025-06-04 13:45:43,866 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:60 - GateIOClient initialized. Settle Currency: 'usdt', Environment: 'live', API Host: 'https://api.gateio.ws/api/v4'
+2025-06-04 13:45:43,866 - trading_bot.cli           - CRITICAL - cli.py:742 - GateIOClient 초기화 중 예상치 못한 오류: 'FuturesApi' object has no attribute 'get_futures_accounts'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 731, in main
+    gate_client = GateIOClient() # .env 파일은 main.py에서 로드됨
+                  ^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 61, in __init__
+    self._test_connectivity()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 67, in _test_connectivity
+    account_info = self.get_account_info() # 잔고 조회로 연결 테스트
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 227, in get_account_info
+    futures_account: FuturesAccount = self.futures_api.get_futures_accounts(settle=self.settle)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'FuturesApi' object has no attribute 'get_futures_accounts'. Did you mean: 'list_futures_accounts'?
+2025-06-06 13:15:05,787 - __main__                  - INFO     - main.py:69 - Successfully loaded environment variables from /workspaces/Trading_Bot/Trading_BOT/.env
+2025-06-06 13:15:05,787 - __main__                  - INFO     - main.py:73 - Successfully added /workspaces/Trading_Bot/Trading_BOT/src to sys.path
+2025-06-06 13:15:05,787 - __main__                  - INFO     - main.py:75 - Logging initialized. Application log level set to: INFO (20). Log file: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-06-06 13:15:05,787 - __main__                  - INFO     - main.py:97 - Trading_BOT/main.py executed as script. Current working directory: /workspaces/Trading_Bot
+2025-06-06 13:15:06,002 - __main__                  - INFO     - main.py:86 - Invoking trading_bot.cli.main command...
+2025-06-06 13:15:06,003 - trading_bot.cli           - INFO     - cli.py:726 - ========== 자동매매 봇 CLI 시작 ==========
+2025-06-06 13:15:06,007 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:39 - GateIOClient initialized. Settle Currency: 'usdt', Environment: 'live', API Host: 'https://api.gateio.ws/api/v4'
+2025-06-06 13:15:06,438 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:171 - Gate.io 계좌 정보 조회 API 오류: Status=401, Body='{"label":"INVALID_KEY","message":"Invalid key provided"}
+'
+2025-06-06 13:15:06,438 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:49 - API connectivity test failed: Account info could not be retrieved or user_id missing.
+2025-06-06 13:15:06,438 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:52 - Failed to connect/authenticate with Gate.io API during connectivity test. Status: 0, Body: None
+2025-06-06 13:15:06,438 - trading_bot.cli           - CRITICAL - cli.py:737 - Gate.io API 연결/인증 실패 (초기화 중): Status=0, Body='None'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 731, in main
+    gate_client = GateIOClient() # .env 파일은 main.py에서 로드됨
+                  ^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 40, in __init__
+    self._test_connectivity()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 50, in _test_connectivity
+    raise ApiException(status=0, reason="Failed to retrieve valid account info during connectivity test.")
+gate_api.exceptions.ApiException: (0)
+Reason: Failed to retrieve valid account info during connectivity test.
+
+2025-06-06 13:52:16,015 - __main__                  - INFO     - main.py:69 - Successfully loaded environment variables from /workspaces/Trading_Bot/Trading_BOT/.env
+2025-06-06 13:52:16,023 - __main__                  - INFO     - main.py:73 - Successfully added /workspaces/Trading_Bot/Trading_BOT/src to sys.path
+2025-06-06 13:52:16,024 - __main__                  - INFO     - main.py:75 - Logging initialized. Application log level set to: INFO (20). Log file: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-06-06 13:52:16,025 - __main__                  - INFO     - main.py:97 - Trading_BOT/main.py executed as script. Current working directory: /workspaces/Trading_Bot
+2025-06-06 13:52:18,618 - __main__                  - INFO     - main.py:86 - Invoking trading_bot.cli.main command...
+2025-06-06 13:52:18,619 - trading_bot.cli           - INFO     - cli.py:726 - ========== 자동매매 봇 CLI 시작 ==========
+2025-06-06 13:52:18,628 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:39 - GateIOClient initialized. Settle Currency: 'usdt', Environment: 'live', API Host: 'https://api.gateio.ws/api/v4'
+2025-06-06 13:52:19,345 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:171 - Gate.io 계좌 정보 조회 API 오류: Status=400, Body='{"label":"USER_NOT_FOUND","message":"please transfer funds first to create futures account"}'
+2025-06-06 13:52:19,346 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:49 - API connectivity test failed: Account info could not be retrieved or user_id missing.
+2025-06-06 13:52:19,347 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:52 - Failed to connect/authenticate with Gate.io API during connectivity test. Status: 0, Body: None
+2025-06-06 13:52:19,347 - trading_bot.cli           - CRITICAL - cli.py:737 - Gate.io API 연결/인증 실패 (초기화 중): Status=0, Body='None'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 731, in main
+    gate_client = GateIOClient() # .env 파일은 main.py에서 로드됨
+                  ^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 40, in __init__
+    self._test_connectivity()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 50, in _test_connectivity
+    raise ApiException(status=0, reason="Failed to retrieve valid account info during connectivity test.")
+gate_api.exceptions.ApiException: (0)
+Reason: Failed to retrieve valid account info during connectivity test.
+
+2025-06-06 13:55:44,876 - __main__                  - INFO     - main.py:69 - Successfully loaded environment variables from /workspaces/Trading_Bot/Trading_BOT/.env
+2025-06-06 13:55:44,876 - __main__                  - INFO     - main.py:73 - Successfully added /workspaces/Trading_Bot/Trading_BOT/src to sys.path
+2025-06-06 13:55:44,876 - __main__                  - INFO     - main.py:75 - Logging initialized. Application log level set to: INFO (20). Log file: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-06-06 13:55:44,876 - __main__                  - INFO     - main.py:97 - Trading_BOT/main.py executed as script. Current working directory: /workspaces/Trading_Bot
+2025-06-06 13:55:44,999 - __main__                  - INFO     - main.py:86 - Invoking trading_bot.cli.main command...
+2025-06-06 13:55:45,000 - trading_bot.cli           - INFO     - cli.py:726 - ========== 자동매매 봇 CLI 시작 ==========
+2025-06-06 13:55:45,001 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:39 - GateIOClient initialized. Settle Currency: 'usdt', Environment: 'live', API Host: 'https://api.gateio.ws/api/v4'
+2025-06-06 13:55:45,440 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:171 - Gate.io 계좌 정보 조회 API 오류: Status=400, Body='{"label":"USER_NOT_FOUND","message":"please transfer funds first to create futures account"}'
+2025-06-06 13:55:45,440 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:49 - API connectivity test failed: Account info could not be retrieved or user_id missing.
+2025-06-06 13:55:45,440 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:52 - Failed to connect/authenticate with Gate.io API during connectivity test. Status: 0, Body: None
+2025-06-06 13:55:45,440 - trading_bot.cli           - CRITICAL - cli.py:737 - Gate.io API 연결/인증 실패 (초기화 중): Status=0, Body='None'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 731, in main
+    gate_client = GateIOClient() # .env 파일은 main.py에서 로드됨
+                  ^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 40, in __init__
+    self._test_connectivity()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 50, in _test_connectivity
+    raise ApiException(status=0, reason="Failed to retrieve valid account info during connectivity test.")
+gate_api.exceptions.ApiException: (0)
+Reason: Failed to retrieve valid account info during connectivity test.
+
