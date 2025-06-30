@@ -6,15 +6,14 @@ import json # JSON 파싱을 위해 추가
 from typing import Dict, Any, Literal, Optional, List
 
 # Gate.io 공식 SDK 임포트
-# FuturesOrder: 주문 생성 시 사용, Position: 포지션 정보 조회 시 사용 등
-from gate_api import Configuration, ApiClient, FuturesApi, ApiException, FuturesOrder, Position, FuturesAccount, FuturesTicker # FuturesTicker 임포트 추가
+from gate_api import Configuration, ApiClient, FuturesApi, ApiException, FuturesOrder, Position, FuturesAccount, FuturesTicker
 
 _LOG = logging.getLogger(__name__)
 
 # .env 파일은 main.py에서 로드됨. 여기서는 os.getenv를 통해 환경 변수 사용.
 GATE_API_KEY = os.getenv("GATE_API_KEY")
 GATE_API_SECRET = os.getenv("GATE_API_SECRET")
-GATE_ENV = os.getenv("GATE_ENV", "live")  # 기본값을 "live"로 설정
+GATE_ENV = os.getenv("GATE_ENV", "live")
 
 if not GATE_API_KEY or not GATE_API_SECRET:
     _LOG.critical("CRITICAL: Gate.io API Key or Secret not found. Please set them in the .env file or as environment variables.")
@@ -36,22 +35,53 @@ class GateIOClient:
         self.api_client = ApiClient(current_api_config)
         self.futures_api = FuturesApi(self.api_client)
         
-        _LOG.info(f"GateIOClient initialized. Settle Currency: '{self.settle}', Environment: '{GATE_ENV}', API Host: '{_BASE_URL}'")
+        _LOG.info(f"GateIOClient 초기화 완료. 정산 통화: '{self.settle}', 환경: '{GATE_ENV}', API 호스트: '{_BASE_URL}'")
         self._test_connectivity()
 
     def _test_connectivity(self) -> None:
         _LOG.debug("Testing API connectivity and authentication...")
         try:
             account_info = self.get_account_info()
-            if account_info and account_info.get('user_id'):
-                 _LOG.info(f"Successfully connected to Gate.io API and authenticated. User ID: {account_info['user_id']}")
+            if account_info and account_info.get('user'): # .user_id 대신 .user, 그리고 존재하는지 확인
+                 _LOG.info(f"Successfully connected to Gate.io API and authenticated. User ID: {account_info['user']}")
             else:
-                _LOG.error("API connectivity test failed: Account info could not be retrieved or user_id missing.")
+                # USER_NOT_FOUND 오류는 이제 get_account_info 내부에서 처리되므로, 다른 종류의 실패를 가정
+                _LOG.error("API connectivity test failed: Account info could not be retrieved or user ID missing.")
                 raise ApiException(status=0, reason="Failed to retrieve valid account info during connectivity test.")
         except ApiException as e:
             _LOG.error(f"Failed to connect/authenticate with Gate.io API during connectivity test. Status: {e.status}, Body: {e.body}")
             raise
 
+    def get_account_info(self) -> Optional[Dict[str, Any]]:
+        """선물 계좌의 전반적인 정보를 조회합니다."""
+        _LOG.debug(f"선물 계좌({self.settle}) 정보 조회 시도.")
+        try:
+            # *** 여기가 수정된 부분입니다 ***
+            # list_futures_accounts가 settle 인자 지정 시 단일 객체를 반환.
+            # 따라서 리스트 인덱싱([0])을 제거합니다.
+            futures_account: FuturesAccount = self.futures_api.list_futures_accounts(settle=self.settle)
+            
+            # API가 비어있는 객체를 반환할 수도 있으므로, user 속성 존재 여부 확인
+            if not hasattr(futures_account, 'user'):
+                 _LOG.error(f"Gate.io {self.settle} 선물 계좌 정보를 찾을 수 없거나 응답이 비어있습니다.")
+                 return None
+
+            _LOG.info(f"계좌 정보 ({self.settle}): UserID={futures_account.user}, "
+                      f"사용가능잔액={futures_account.available} {self.settle.upper()}, "
+                      f"총잔액={futures_account.total} {self.settle.upper()}")
+            return futures_account.to_dict()
+        except ApiException as e:
+            if "USER_NOT_FOUND" in str(e.body):
+                _LOG.error(f"Gate.io API 오류: 선물 계정이 활성화되지 않았습니다. 웹사이트에서 선물 지갑으로 소액을 이체해주세요. Body: {e.body}")
+            else:
+                _LOG.error(f"Gate.io 계좌 정보 조회 API 오류: Status={e.status}, Body='{e.body}'")
+            # 연결 테스트 실패를 유발하기 위해 예외를 다시 발생시킬 수 있음
+            raise
+        except Exception as e:
+            _LOG.error(f"계좌 정보 처리 중 예상치 못한 오류: {e}", exc_info=True)
+            raise
+
+    # ... 이하 다른 메소드들은 이전과 동일하게 유지됩니다 ...
     def place_order(
         self,
         contract_symbol: str,
@@ -149,32 +179,7 @@ class GateIOClient:
                  return {"contract": contract_symbol, "size": 0, "message": "No active position found"}
             _LOG.error(f"Gate.io 포지션 조회 API 오류: Status={e.status}, Body='{e.body}'")
             return None
-
-    def get_account_info(self) -> Optional[Dict[str, Any]]:
-        _LOG.debug(f"선물 계좌({self.settle}) 정보 조회 시도.")
-        try:
-            # *** 여기가 수정된 부분입니다 ***
-            futures_account: FuturesAccount = self.futures_api.list_futures_accounts(settle=self.settle)
-            # list_futures_accounts가 단일 FuturesAccount 객체를 반환한다고 가정 (SDK 문서 확인 필요)
-            # 만약 리스트를 반환한다면:
-            # accounts_list: List[FuturesAccount] = self.futures_api.list_futures_accounts(settle=self.settle)
-            # if not accounts_list:
-            #     _LOG.error(f"Gate.io {self.settle} 선물 계좌 정보를 찾을 수 없습니다.")
-            #     return None
-            # futures_account = accounts_list[0] # 또는 특정 조건에 맞는 계좌 선택 로직
-
-            _LOG.info(f"계좌 정보 ({self.settle}): UserID={futures_account.user_id}, "
-                      f"사용가능잔액={futures_account.available} {self.settle.upper()}, "
-                      f"총잔액={futures_account.total} {self.settle.upper()}")
-            return futures_account.to_dict()
-        except ApiException as e:
-            _LOG.error(f"Gate.io 계좌 정보 조회 API 오류: Status={e.status}, Body='{e.body}'")
-            return None
-        except AttributeError as ae: # list_futures_accounts가 예상과 다른 타입을 반환할 경우 대비
-            _LOG.error(f"Gate.io 계좌 정보 처리 중 오류: {ae}. API 응답 구조가 변경되었을 수 있습니다.", exc_info=True)
-            return None
-
-
+            
     def fetch_last_price(self, contract_symbol: str) -> Optional[float]:
         _LOG.debug(f"현재가 조회 시도: {contract_symbol}")
         try:
