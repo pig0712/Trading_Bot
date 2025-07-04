@@ -9,92 +9,110 @@ from __future__ import annotations
 
 import sys
 import logging
-import os # os.getenv 사용을 위해 추가
+import os
+from logging.handlers import RotatingFileHandler # 로그 파일 자동 관리를 위해 임포트
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 # ──────────────────────────────────────────────────────────────────────────
-# 경로 및 환경 변수 설정
+# 1. 경로 및 환경 변수 설정
 # ──────────────────────────────────────────────────────────────────────────
 # 이 파일(main.py)이 있는 디렉토리를 프로젝트 루트로 간주합니다.
-# (예: /path/to/your/Trading_Bot/)
 ROOT_DIR = Path(__file__).resolve().parent
 ENV_PATH = ROOT_DIR / ".env"
+SRC_DIR = ROOT_DIR / "src"
 
-# .env 파일 로드 시도 (프로그램 시작 시 한 번만)
+# .env 파일 로드 (로깅 설정 전이므로 print를 사용하여 상태 출력)
 if ENV_PATH.exists():
     load_dotenv(dotenv_path=ENV_PATH, verbose=True)
-    # 초기 로깅 설정 전이므로 print 사용
-    print(f"INFO: main.py - Loaded environment variables from {ENV_PATH}", file=sys.stderr)
+    print(f"INFO: '.env' 파일 로드 완료: {ENV_PATH}", file=sys.stderr)
 else:
-    print(f"WARNING: main.py - .env file not found at {ENV_PATH}. API keys might be missing or need to be set as environment variables.", file=sys.stderr)
+    print(f"WARNING: '.env' 파일을 찾을 수 없습니다: {ENV_PATH}. 시스템 환경변수를 확인하세요.", file=sys.stderr)
 
 # src 디렉토리를 Python 경로에 추가 (다른 모듈 import 전에 수행)
-SRC_DIR = ROOT_DIR / "src"
 if SRC_DIR.exists() and str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
-    print(f"INFO: main.py - Added {SRC_DIR} to sys.path", file=sys.stderr)
+    print(f"INFO: Python 경로에 'src' 폴더 추가 완료: {SRC_DIR}", file=sys.stderr)
+
 
 # ──────────────────────────────────────────────────────────────────────────
-# 로깅 설정 (다른 모듈 import 전에 기본 설정 완료)
+# 2. 로깅 설정
 # ──────────────────────────────────────────────────────────────────────────
-LOG_DIR = ROOT_DIR / "logs"
-LOG_DIR.mkdir(exist_ok=True) # 로그 디렉토리 생성 (이미 있으면 무시)
-LOG_FILE = LOG_DIR / "trading_bot.log"
+def setup_logging():
+    """애플리케이션 전반의 로깅 시스템을 설정하고 초기화합니다."""
+    
+    LOG_DIR = ROOT_DIR / "logs"
+    LOG_DIR.mkdir(exist_ok=True)
+    LOG_FILE = LOG_DIR / "trading_bot.log"
 
-# 환경 변수에서 로그 레벨 가져오기 (기본값: INFO)
-LOG_LEVEL_STR = os.getenv("LOG_LEVEL", "INFO").upper()
-# getattr을 사용하여 문자열로부터 logging 레벨 객체 가져오기
-LOG_LEVEL = getattr(logging, LOG_LEVEL_STR, logging.INFO)
-if not isinstance(LOG_LEVEL, int): # getattr 실패 시 기본값 INFO 사용
-    print(f"WARNING: main.py - Invalid LOG_LEVEL '{LOG_LEVEL_STR}'. Defaulting to INFO.", file=sys.stderr)
-    LOG_LEVEL = logging.INFO
+    # .env 또는 시스템 환경 변수에서 로그 레벨 가져오기 (기본값: INFO)
+    log_level_str = os.getenv("LOG_LEVEL", "INFO").upper()
+    log_level = getattr(logging, log_level_str, logging.INFO)
 
-# 로깅 기본 설정
-logging.basicConfig(
-    level=LOG_LEVEL,
-    format='%(asctime)s - %(name)-25s - %(levelname)-8s - %(filename)s:%(lineno)d - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout),  # 콘솔 출력 핸들러
-        logging.FileHandler(LOG_FILE, mode='a', encoding='utf-8')  # 파일 출력 핸들러 (이어쓰기 모드)
-    ]
-)
+    # 문자열 변환 실패 시(잘못된 값 입력 시) 기본값으로 INFO 사용
+    if not isinstance(log_level, int):
+        print(f"WARNING: 잘못된 LOG_LEVEL '{log_level_str}'. 기본값 INFO를 사용합니다.", file=sys.stderr)
+        log_level = logging.INFO
 
-# 이 파일 자체의 로거 (basicConfig 이후에 getLogger 호출)
-_MAIN_LOG = logging.getLogger(__name__) # 이제 로거 사용 가능
+    # 로깅 기본 설정
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s - %(name)-25s - %(levelname)-8s - %(filename)s:%(lineno)d - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            # 로그 파일이 5MB를 초과하면 새 파일로 교체 (최대 5개 보관)
+            RotatingFileHandler(
+                LOG_FILE,
+                maxBytes=5 * 1024 * 1024,  # 5 MB
+                backupCount=5,
+                encoding='utf-8'
+            )
+        ]
+    )
 
-# .env 로드 및 sys.path 추가에 대한 로그 (basicConfig 이후)
-if ENV_PATH.exists():
-    _MAIN_LOG.info(f"Successfully loaded environment variables from {ENV_PATH}")
-else:
-    _MAIN_LOG.warning(f".env file not found at {ENV_PATH}. API keys might be missing.")
-if SRC_DIR.exists() and str(SRC_DIR) in sys.path:
-     _MAIN_LOG.info(f"Successfully added {SRC_DIR} to sys.path")
+    # 외부 라이브러리(gate_api 등)의 로그가 너무 많이 찍히는 것을 방지
+    logging.getLogger("gate_api").setLevel(logging.WARNING)
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    
+    # 이제 로거를 안전하게 사용할 수 있음
+    logger = logging.getLogger(__name__)
+    logger.info(f"로깅 시스템 초기화 완료. 로그 레벨: {log_level_str}. 로그 파일: {LOG_FILE.resolve()}")
+    return logger
 
-_MAIN_LOG.info(f"Logging initialized. Application log level set to: {LOG_LEVEL_STR} ({LOG_LEVEL}). Log file: {LOG_FILE.resolve()}")
-
-
-def run_main_cli():
-    """
-    trading_bot.cli 모듈의 메인 CLI 명령을 가져와 실행합니다.
-    이 함수는 모든 초기 설정(경로, .env, 로깅)이 완료된 후 호출됩니다.
-    """
+# ──────────────────────────────────────────────────────────────────────────
+# 3. 애플리케이션 실행
+# ──────────────────────────────────────────────────────────────────────────
+def run_cli_app(logger: logging.Logger):
+    """모든 초기 설정 완료 후, CLI 애플리케이션을 실행합니다."""
     try:
-        # src 경로가 sys.path에 추가된 후 import 수행
-        from trading_bot.cli import main as cli_main_command # cli.py의 main 함수를 가져옴
-        _MAIN_LOG.info("Invoking trading_bot.cli.main command...")
-        cli_main_command()  # Click이 sys.argv를 파싱하여 적절한 명령 실행
+        # src 경로가 추가된 후 import 수행
+        from trading_bot.cli import main as cli_main_command
+        
+        logger.info("CLI 애플리케이션 시작...")
+        cli_main_command()
+        
     except ImportError:
-        _MAIN_LOG.critical("Failed to import trading_bot.cli. Is 'src' directory in PYTHONPATH and all dependencies installed?", exc_info=True)
-        sys.exit(1) # 심각한 오류로 종료
-    except Exception as e: # click 명령 실행 중 발생할 수 있는 모든 예외 포괄
-        _MAIN_LOG.critical(f"An unexpected error occurred when trying to run the CLI: {e}", exc_info=True)
-        sys.exit(1) # 심각한 오류로 종료
+        logger.critical("trading_bot.cli 모듈 임포트 실패. 'src' 디렉토리 및 의존성 설치를 확인하세요.", exc_info=True)
+        sys.exit(1)
+    except Exception as e:
+        logger.critical(f"CLI 실행 중 예상치 못한 오류 발생: {e}", exc_info=True)
+        sys.exit(1)
 
-
+# ──────────────────────────────────────────────────────────────────────────
+# 메인 실행 블록
+# ──────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    _MAIN_LOG.info(f"Trading_BOT/main.py executed as script. Current working directory: {Path.cwd()}")
-    run_main_cli()
-    _MAIN_LOG.info("Trading_BOT/main.py finished.")
+    # 1. 로깅 시스템 설정 및 로거 인스턴스 가져오기
+    main_logger = setup_logging()
+    
+    # 2. 메인 CLI 앱 실행
+    main_logger.info(f"Trading_BOT 스크립트 실행 시작. CWD: {Path.cwd()}")
+    run_cli_app(main_logger)
+    main_logger.info("Trading_BOT 스크립트 실행 완료.")
 
+
+    
+    
