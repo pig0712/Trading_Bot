@@ -2,21 +2,19 @@
 import os
 import time
 import logging
-import json # JSON 파싱을 위해 추가
+import json
 from typing import Dict, Any, Literal, Optional, List
 
-# Gate.io 공식 SDK 임포트
 from gate_api import Configuration, ApiClient, FuturesApi, ApiException, FuturesOrder, Position, FuturesAccount, FuturesTicker
 
 _LOG = logging.getLogger(__name__)
 
-# .env 파일은 main.py에서 로드됨. 여기서는 os.getenv를 통해 환경 변수 사용.
 GATE_API_KEY = os.getenv("GATE_API_KEY")
 GATE_API_SECRET = os.getenv("GATE_API_SECRET")
 GATE_ENV = os.getenv("GATE_ENV", "live")
 
 if not GATE_API_KEY or not GATE_API_SECRET:
-    _LOG.critical("CRITICAL: Gate.io API Key or Secret not found. Please set them in the .env file or as environment variables.")
+    _LOG.critical("CRITICAL: Gate.io API Key or Secret not found.")
     raise EnvironmentError("GATE_API_KEY and GATE_API_SECRET must be set for GateIOClient.")
 
 _BASE_URL = (
@@ -42,46 +40,26 @@ class GateIOClient:
         _LOG.debug("Testing API connectivity and authentication...")
         try:
             account_info = self.get_account_info()
-            if account_info and account_info.get('user'): # .user_id 대신 .user, 그리고 존재하는지 확인
-                 _LOG.info(f"Successfully connected to Gate.io API and authenticated. User ID: {account_info['user']}")
+            if account_info and account_info.get('currency'):
+                 _LOG.info(f"Successfully connected to Gate.io API and authenticated. Currency: {account_info['currency']}")
             else:
-                # USER_NOT_FOUND 오류는 이제 get_account_info 내부에서 처리되므로, 다른 종류의 실패를 가정
-                _LOG.error("API connectivity test failed: Account info could not be retrieved or user ID missing.")
+                _LOG.error("API connectivity test failed: Account info could not be retrieved or is invalid.")
                 raise ApiException(status=0, reason="Failed to retrieve valid account info during connectivity test.")
         except ApiException as e:
             _LOG.error(f"Failed to connect/authenticate with Gate.io API during connectivity test. Status: {e.status}, Body: {e.body}")
             raise
 
-    def get_account_info(self) -> Optional[Dict[str, Any]]:
-        """선물 계좌의 전반적인 정보를 조회합니다."""
-        _LOG.debug(f"선물 계좌({self.settle}) 정보 조회 시도.")
-        try:
-            # *** 여기가 수정된 부분입니다 ***
-            # list_futures_accounts가 settle 인자 지정 시 단일 객체를 반환.
-            # 따라서 리스트 인덱싱([0])을 제거합니다.
-            futures_account: FuturesAccount = self.futures_api.list_futures_accounts(settle=self.settle)
-            
-            # API가 비어있는 객체를 반환할 수도 있으므로, user 속성 존재 여부 확인
-            if not hasattr(futures_account, 'user'):
-                 _LOG.error(f"Gate.io {self.settle} 선물 계좌 정보를 찾을 수 없거나 응답이 비어있습니다.")
-                 return None
+    def get_contract_multiplier(self, contract_symbol: str) -> Optional[float]:
+        """심볼에 맞는 계약 단위를 반환합니다. 향후 API에서 동적으로 가져오도록 개선할 수 있습니다."""
+        symbol_upper = contract_symbol.upper()
+        if "BTC" in symbol_upper:
+            return 0.0001  # 1 계약 = 0.0001 BTC
+        elif "ETH" in symbol_upper:
+            return 0.001   # 1 계약 = 0.001 ETH (예시)
+        else:
+            _LOG.warning(f"'{contract_symbol}'에 대한 계약 단위를 알 수 없습니다. 기본값 1을 사용합니다 (위험!).")
+            return 1.0
 
-            _LOG.info(f"계좌 정보 ({self.settle}): UserID={futures_account.user}, "
-                      f"사용가능잔액={futures_account.available} {self.settle.upper()}, "
-                      f"총잔액={futures_account.total} {self.settle.upper()}")
-            return futures_account.to_dict()
-        except ApiException as e:
-            if "USER_NOT_FOUND" in str(e.body):
-                _LOG.error(f"Gate.io API 오류: 선물 계정이 활성화되지 않았습니다. 웹사이트에서 선물 지갑으로 소액을 이체해주세요. Body: {e.body}")
-            else:
-                _LOG.error(f"Gate.io 계좌 정보 조회 API 오류: Status={e.status}, Body='{e.body}'")
-            # 연결 테스트 실패를 유발하기 위해 예외를 다시 발생시킬 수 있음
-            raise
-        except Exception as e:
-            _LOG.error(f"계좌 정보 처리 중 예상치 못한 오류: {e}", exc_info=True)
-            raise
-
-    # ... 이하 다른 메소드들은 이전과 동일하게 유지됩니다 ...
     def place_order(
         self,
         contract_symbol: str,
@@ -94,33 +72,58 @@ class GateIOClient:
         time_in_force: str = "gtc",
         order_id_prefix: str = "t-bot-"
     ) -> Optional[Dict[str, Any]]:
+        
+        if not reduce_only:
+            _LOG.info(f"주문 전 {contract_symbol}의 레버리지를 {leverage}x로 설정합니다.")
+            try:
+                self.update_position_leverage(contract_symbol, leverage)
+            except Exception as e:
+                _LOG.error(f"레버리지 설정 실패로 주문을 진행할 수 없습니다: {e}")
+                return None
+
         if order_amount_usd <= 0:
             _LOG.error(f"주문 금액(USD)은 0보다 커야 합니다: {order_amount_usd}")
             return None
 
         current_market_price = self.fetch_last_price(contract_symbol)
         if current_market_price is None:
-            _LOG.error(f"{contract_symbol}의 현재가를 가져올 수 없어 주문 수량을 계산할 수 없습니다. 주문을 진행할 수 없습니다.")
+            _LOG.error(f"{contract_symbol}의 현재가를 가져올 수 없어 주문 수량을 계산할 수 없습니다.")
             return None
 
-        contracts_to_order = round(order_amount_usd / current_market_price, 8)
+        contract_multiplier = self.get_contract_multiplier(contract_symbol)
+        if contract_multiplier is None:
+            return None
 
-        if abs(contracts_to_order) < 1e-8:
-            _LOG.warning(f"{contract_symbol}에 대해 {order_amount_usd} USD로 계산된 계약 수량이 너무 작습니다 (거의 0). "
-                         f"최소 주문 수량을 충족하지 못할 수 있습니다. (계산된 수량: {contracts_to_order})")
+        coin_quantity_to_order = order_amount_usd / current_market_price
+        num_contracts_to_order = int(coin_quantity_to_order / contract_multiplier)
 
-        api_order_size = contracts_to_order if position_side == "long" else -contracts_to_order
+        min_order_size = 1 # 1 계약
+        if abs(num_contracts_to_order) < min_order_size:
+            _LOG.error(f"계산된 계약 개수({num_contracts_to_order})가 최소 주문 단위({min_order_size} 계약)보다 작습니다.")
+            _LOG.error("주문 금액(USD)을 늘리거나, 코인 가격이 변할 때까지 기다려야 합니다. 주문을 취소합니다.")
+            return None
+
+        api_order_size = num_contracts_to_order if position_side == "long" else -num_contracts_to_order
+        
         timestamp_ms = int(time.time() * 1000)
-        client_order_id = f"{order_id_prefix}{timestamp_ms}"[-30:]
+        client_order_id = f"{order_id_prefix}{timestamp_ms}"
         if not client_order_id.startswith("t-"):
-            client_order_id = "t-" + client_order_id[-28:]
-            _LOG.warning(f"Order ID prefix '{order_id_prefix}' did not start with 't-'. Adjusted to '{client_order_id}'.")
+            client_order_id = "t-" + client_order_id
+        client_order_id = client_order_id[:30]
 
+        # --- 여기가 수정된 부분입니다 ---
+        # 주문 유형에 따라 올바른 Time in Force(tif) 값을 설정합니다.
+        effective_tif = time_in_force
+        if order_type == "market":
+            # Gate.io API 규칙: 시장가 주문은 'ioc' 또는 'fok'여야 합니다.
+            if time_in_force not in ["ioc", "fok"]:
+                _LOG.info(f"시장가 주문 감지. 주문 유효 기간(tif)을 기본값 '{time_in_force}'에서 'ioc'로 강제 변경합니다.")
+                effective_tif = "ioc"
+        
         futures_order_payload = FuturesOrder(
             contract=contract_symbol,
             size=api_order_size,
-            leverage=str(leverage),
-            tif=time_in_force,
+            tif=effective_tif, # 수정된 tif 값 사용
             text=client_order_id,
             reduce_only=reduce_only
         )
@@ -134,34 +137,57 @@ class GateIOClient:
             futures_order_payload.price = "0"
 
         _LOG.info(f"주문 시도: 심볼={contract_symbol}, 방향={position_side}, 유형={order_type}, "
-                  f"계약수량={api_order_size:.8f} (계산근거: {order_amount_usd} USD @ {current_market_price:.4f}), "
-                  f"지정가={limit_price if limit_price else 'N/A'}, 레버리지={leverage}x, ReduceOnly={reduce_only}, ClientOrderID={client_order_id}")
+                  f"계약수량(size)={futures_order_payload.size}, TIF='{effective_tif}', 지정가={limit_price if limit_price else 'N/A'}, "
+                  f"ReduceOnly={reduce_only}, ClientOrderID={client_order_id}")
         try:
             created_order: FuturesOrder = self.futures_api.create_futures_order(
                 settle=self.settle, 
                 futures_order=futures_order_payload
             )
-            _LOG.info(f"주문 성공: ID={created_order.id}, 계약={created_order.contract}, 상태={created_order.status}, ClientOrderID={created_order.text}")
+            _LOG.info(f"주문 성공: ID={created_order.id}, 계약={created_order.contract}, 상태={created_order.status}")
             return created_order.to_dict()
         except ApiException as e:
-            error_body = e.body
-            error_label = ""
-            if isinstance(error_body, str):
-                try:
-                    error_data = json.loads(error_body)
-                    error_label = error_data.get("label", "")
-                    _LOG.error(f"Gate.io 주문 API 오류: Status={e.status}, Label='{error_label}', Reason='{e.reason}', Body='{error_body}'")
-                except json.JSONDecodeError:
-                    _LOG.error(f"Gate.io 주문 API 오류 (body 파싱 불가): Status={e.status}, Reason='{e.reason}', Body='{error_body}'")
-            else:
-                 _LOG.error(f"Gate.io 주문 API 오류: Status={e.status}, Reason='{e.reason}', Body (type: {type(error_body)})='{error_body}'")
-            
-            if error_label == "BALANCE_NOT_ENOUGH":
-                _LOG.error("잔고 부족으로 주문 실패.")
-            elif error_label == "ORDER_SIZE_NOT_ENOUGH" or error_label == "MIN_ORDER_SIZE_NOT_MET":
-                _LOG.error("최소 주문 수량 미달로 주문 실패.")
+            _LOG.error(f"Gate.io 주문 API 오류: Status={e.status}, Body='{e.body}'")
             return None
 
+    def get_account_info(self) -> Optional[Dict[str, Any]]:
+        _LOG.debug(f"선물 계좌({self.settle}) 정보 조회 시도.")
+        try:
+            api_response = self.futures_api.list_futures_accounts(settle=self.settle)
+            _LOG.info(f"DEBUG: list_futures_accounts API 응답 수신. 타입: {type(api_response)}, 값: {api_response}")
+
+            futures_account_obj = None
+
+            if isinstance(api_response, list):
+                if not api_response:
+                    _LOG.warning(f"API가 {self.settle} 선물 계좌에 대한 빈 리스트를 반환했습니다.")
+                    return None
+                else:
+                    futures_account_obj = api_response[0]
+                    _LOG.debug("API 응답이 리스트 형태이므로 첫 번째 항목을 사용합니다.")
+            else:
+                futures_account_obj = api_response
+                _LOG.debug("API 응답이 단일 객체 형태(또는 None)입니다.")
+
+            if futures_account_obj and hasattr(futures_account_obj, 'currency'):
+                _LOG.info(f"계좌 정보 ({self.settle}): Currency={futures_account_obj.currency}, "
+                          f"사용가능잔액={futures_account_obj.available} {self.settle.upper()}, "
+                          f"총잔액={futures_account_obj.total} {self.settle.upper()}")
+                return futures_account_obj.to_dict()
+            else:
+                _LOG.error(f"Gate.io {self.settle} 선물 계좌 정보를 찾을 수 없거나 응답 객체가 유효하지 않습니다. 최종 확인된 객체: {futures_account_obj}")
+                return None
+
+        except ApiException as e:
+            if "USER_NOT_FOUND" in str(e.body):
+                _LOG.error(f"Gate.io API 오류: 선물 계정이 활성화되지 않았습니다. 웹사이트에서 선물 지갑으로 소액을 이체해주세요. Body: {e.body}")
+            else:
+                _LOG.error(f"Gate.io 계좌 정보 조회 API 오류: Status={e.status}, Body='{e.body}'")
+            raise
+        except Exception as e:
+            _LOG.error(f"계좌 정보 처리 중 예상치 못한 오류: {e}", exc_info=True)
+            raise
+            
     def get_position(self, contract_symbol: str) -> Optional[Dict[str, Any]]:
         _LOG.debug(f"포지션 정보 조회 시도: {contract_symbol}")
         try:
@@ -269,10 +295,10 @@ class GateIOClient:
             return updated_position.to_dict()
         except ApiException as e:
             _LOG.error(f"Gate.io {contract_symbol} 레버리지 업데이트 API 오류: Status={e.status}, Body='{e.body}'")
-            return None
+            raise
         except AttributeError:
             _LOG.error("현재 설치된 gate-api SDK 버전에 'update_position_leverage' 함수가 없거나 이름이 다를 수 있습니다. SDK 문서를 확인하세요.")
-            return None
+            raise
 
     def get_open_orders(self, contract_symbol: str) -> List[Dict[str, Any]]:
         _LOG.debug(f"미체결 주문 목록 조회 시도: {contract_symbol}")
