@@ -50,14 +50,13 @@ class GateIOClient:
             raise
 
     def get_contract_multiplier(self, contract_symbol: str) -> Optional[float]:
-        """심볼에 맞는 계약 단위를 반환합니다. 향후 API에서 동적으로 가져오도록 개선할 수 있습니다."""
         symbol_upper = contract_symbol.upper()
         if "BTC" in symbol_upper:
-            return 0.0001  # 1 계약 = 0.0001 BTC
+            return 0.0001
         elif "ETH" in symbol_upper:
-            return 0.001   # 1 계약 = 0.001 ETH (예시)
+            return 0.001
         else:
-            _LOG.warning(f"'{contract_symbol}'에 대한 계약 단위를 알 수 없습니다. 기본값 1을 사용합니다 (위험!).")
+            _LOG.warning(f"'{contract_symbol}'에 대한 계약 단위를 알 수 없습니다. 기본값 1을 사용합니다.")
             return 1.0
 
     def place_order(
@@ -97,7 +96,7 @@ class GateIOClient:
         coin_quantity_to_order = order_amount_usd / current_market_price
         num_contracts_to_order = int(coin_quantity_to_order / contract_multiplier)
 
-        min_order_size = 1 # 1 계약
+        min_order_size = 1
         if abs(num_contracts_to_order) < min_order_size:
             _LOG.error(f"계산된 계약 개수({num_contracts_to_order})가 최소 주문 단위({min_order_size} 계약)보다 작습니다.")
             _LOG.error("주문 금액(USD)을 늘리거나, 코인 가격이 변할 때까지 기다려야 합니다. 주문을 취소합니다.")
@@ -111,11 +110,8 @@ class GateIOClient:
             client_order_id = "t-" + client_order_id
         client_order_id = client_order_id[:30]
 
-        # --- 여기가 수정된 부분입니다 ---
-        # 주문 유형에 따라 올바른 Time in Force(tif) 값을 설정합니다.
         effective_tif = time_in_force
         if order_type == "market":
-            # Gate.io API 규칙: 시장가 주문은 'ioc' 또는 'fok'여야 합니다.
             if time_in_force not in ["ioc", "fok"]:
                 _LOG.info(f"시장가 주문 감지. 주문 유효 기간(tif)을 기본값 '{time_in_force}'에서 'ioc'로 강제 변경합니다.")
                 effective_tif = "ioc"
@@ -123,7 +119,7 @@ class GateIOClient:
         futures_order_payload = FuturesOrder(
             contract=contract_symbol,
             size=api_order_size,
-            tif=effective_tif, # 수정된 tif 값 사용
+            tif=effective_tif,
             text=client_order_id,
             reduce_only=reduce_only
         )
@@ -232,7 +228,8 @@ class GateIOClient:
         _LOG.debug(f"주문 상태 조회 시도: OrderID='{order_id}'")
         try:
             order_status: FuturesOrder = self.futures_api.get_futures_order(settle=self.settle, order_id=order_id)
-            _LOG.info(f"주문 상태 (ID: {order_id}): Status='{order_status.status}', FilledSize='{order_status.filled_size}', "
+            # --- 여기가 수정된 부분입니다: .filled_size 대신 .size 사용 ---
+            _LOG.info(f"주문 상태 (ID: {order_id}): Status='{order_status.status}', Size='{order_status.size}', "
                       f"AvgFillPrice='{order_status.fill_price}', Price='{order_status.price}'")
             return order_status.to_dict()
         except ApiException as e:
@@ -314,3 +311,53 @@ class GateIOClient:
         except ApiException as e:
             _LOG.error(f"Gate.io {contract_symbol} 미체결 주문 조회 API 오류: Status={e.status}, Body='{e.body}'")
             return []
+
+    # --- 여기가 추가된 부분입니다 (1/2): 모든 포지션 조회 함수 ---
+    def list_all_positions(self) -> List[Dict[str, Any]]:
+        """계정의 모든 활성 포지션 목록을 가져옵니다."""
+        _LOG.info("계정의 모든 활성 포지션 조회 시도...")
+        try:
+            all_positions: List[Position] = self.futures_api.list_positions(settle=self.settle)
+            if not all_positions:
+                _LOG.info("현재 보유 중인 포지션이 없습니다.")
+                return []
+            
+            positions_list = [pos.to_dict() for pos in all_positions if pos.size != 0]
+            _LOG.info(f"총 {len(positions_list)}개의 활성 포지션을 발견했습니다.")
+            return positions_list
+        except ApiException as e:
+            _LOG.error(f"Gate.io 모든 포지션 조회 API 오류: Status={e.status}, Body='{e.body}'")
+            return []
+
+    # --- 여기가 추가된 부분입니다 (2/2): 시장가 포지션 청산 함수 ---
+    def close_position_market(self, contract_symbol: str) -> Optional[Dict[str, Any]]:
+        """지정된 계약의 포지션을 시장가로 즉시 청산합니다."""
+        _LOG.warning(f"'{contract_symbol}'에 대한 시장가 포지션 청산 시도...")
+        
+        current_position = self.get_position(contract_symbol)
+        if not current_position or current_position.get('size') is None or int(current_position.get('size', 0)) == 0:
+            _LOG.info(f"'{contract_symbol}'에 청산할 포지션이 없습니다.")
+            return None
+
+        position_size = int(current_position['size'])
+        
+        close_order_payload = FuturesOrder(
+            contract=contract_symbol,
+            size=-position_size,
+            tif='ioc',
+            price='0',
+            reduce_only=True,
+            text=f't-close-{contract_symbol[:10]}-{int(time.time())}'
+        )
+
+        _LOG.info(f"시장가 청산 주문 전송: {close_order_payload}")
+        try:
+            closed_order = self.futures_api.create_futures_order(
+                settle=self.settle,
+                futures_order=close_order_payload
+            )
+            _LOG.info(f"'{contract_symbol}' 청산 주문 성공적으로 접수됨. 주문 ID: {closed_order.id}")
+            return closed_order.to_dict()
+        except ApiException as e:
+            _LOG.error(f"'{contract_symbol}' 시장가 청산 주문 API 오류: Status={e.status}, Body='{e.body}'")
+            return None
