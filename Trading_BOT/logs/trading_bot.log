@@ -1,15 +1,53 @@
-2025-07-04 14:27:15 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:27:15 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:27:15 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:27:15 - trading_bot.cli           - INFO     - cli.py:572 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:27:15 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:27:16 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '94.65999545',
+2025-07-06 13:34:43 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:34:43 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:34:43 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:34:43 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:35:43 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:35:43 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:35:43 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:35:43 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:36:43 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:36:43 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:36:43 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:36:43 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:37:43 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:37:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:37:44 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:37:44 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:38:44 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:38:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:38:44 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:38:44 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:39:44 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
+2025-07-06 13:39:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 13:39:44 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 13:39:44 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98011.2285 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108299.7000, 레버리지: 10x, 모드: cross)
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:499 - 'BTC_USDT'에 대한 거래 전략 루프 종료.
+2025-07-06 13:40:03 - trading_bot.cli           - WARNING  - cli.py:502 - 종료 신호 수신. 최종 포지션 청산 시도...
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:310 - stop_loss 주문: 전체 포지션 청산 시도. 계약수량=0.00010157, 추정USD가치=$11.02
+2025-07-06 13:40:03 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
+2025-07-06 13:40:03 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=short, 유형=market, 계약수량(size)=-1, TIF='ioc', 지정가=N/A, ReduceOnly=True, ClientOrderID=t-tradingbot-stop_loss17518092
+2025-07-06 13:40:03 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802954428765, 계약=BTC_USDT, 상태=finished
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:357 - STOP_LOSS 주문 성공적으로 API에 접수됨. 주문 ID: 36028802954428765, 상태: finished
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 stop_loss 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
+2025-07-06 13:40:03 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802954428765) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'stop_loss' fill: Contracts=-0.00010157, Price=$108525.6000, USDValue=$11.02
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:59 - STOP_LOSS resulted in full position closure for BTC_USDT.
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:32 - BotTradingState for BTC_USDT resetting...
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:41 - BotTradingState for BTC_USDT reset complete.
+2025-07-06 13:40:03 - trading_bot.cli           - INFO     - cli.py:683 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 13:48:00 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 13:48:00 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 13:48:00 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 13:48:00 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 13:48:00 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 13:48:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
  'bonus': '0',
- 'cross_available': '94.65999545',
+ 'cross_available': '98.75910135',
  'cross_imr': '0',
  'cross_initial_margin': '0',
  'cross_maintenance_margin': '0',
- 'cross_margin_balance': '94.65999545',
+ 'cross_margin_balance': '98.75910135',
  'cross_mmr': '0',
  'cross_order_margin': '0',
  'cross_unrealised_pnl': '0',
@@ -20,308 +58,9 @@
  'history': {'bonus_dnw': '0',
              'bonus_offset': '0',
              'dnw': '99',
-             'fee': '-0.01078262',
+             'fee': '-0.28061865',
              'fund': '0',
-             'pnl': '0',
-             'point_dnw': '0',
-             'point_fee': '0',
-             'point_refr': '0',
-             'refr': '0'},
- 'in_dual_mode': True,
- 'isolated_position_margin': '4.32922193',
- 'maintenance_margin': '0.102630039',
- 'margin_mode': 0,
- 'order_margin': '0',
- 'point': '0',
- 'position_initial_margin': '0',
- 'position_margin': '0',
- 'total': '98.98921738',
- 'unrealised_pnl': '0.041084'}
-2025-07-04 14:27:16 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=94.65999545 USDT, 총잔액=98.98921738 USDT
-2025-07-04 14:27:16 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:27:19 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:27:19 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:640 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:27 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:394 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175163924730
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802913798088, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:355 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802913798088, 상태: finished
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:358 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:27:27 - trading_bot.cli           - WARNING  - cli.py:374 - 시장가 주문(36028802913798088) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:44 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010179, Price=$108063.8000, USDValue=$11.00
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:53 - Initial entry successful. Position opened.
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:85 - Position state updated for BTC_USDT: AvgEntryPrice=$108063.8000, TotalContracts=0.00010179, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:27:27 - trading_bot.cli           - INFO     - cli.py:406 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:27:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:27:27 - trading_bot.cli           - ERROR    - cli.py:510 - 전략 실행 중 예상치 못한 오류 발생 (심볼: BTC_USDT): float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 413, in run_strategy
-    show_summary(config, current_market_price, gate_client, current_bot_state)
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 217, in show_summary
-    pos_size = float(actual_position_info['size'])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'
-2025-07-04 14:29:37 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:29:37 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:29:37 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:29:37 - trading_bot.cli           - INFO     - cli.py:572 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:29:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:29:38 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '92.485211475',
- 'bonus': '0',
- 'cross_available': '92.485211475',
- 'cross_imr': '0',
- 'cross_initial_margin': '0',
- 'cross_maintenance_margin': '0',
- 'cross_margin_balance': '92.485211475',
- 'cross_mmr': '0',
- 'cross_order_margin': '0',
- 'cross_unrealised_pnl': '0',
- 'currency': 'USDT',
- 'enable_credit': False,
- 'enable_evolved_classic': True,
- 'enable_new_dual_mode': True,
- 'history': {'bonus_dnw': '0',
-             'bonus_offset': '0',
-             'dnw': '99',
-             'fee': '-0.01618581',
-             'fund': '0',
-             'pnl': '0',
-             'point_dnw': '0',
-             'point_fee': '0',
-             'point_refr': '0',
-             'refr': '0'},
- 'in_dual_mode': True,
- 'isolated_position_margin': '6.498602715',
- 'maintenance_margin': '0.15389388675',
- 'margin_mode': 0,
- 'order_margin': '0',
- 'point': '0',
- 'position_initial_margin': '0',
- 'position_margin': '0',
- 'total': '98.98381419',
- 'unrealised_pnl': '0.027093'}
-2025-07-04 14:29:38 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=92.485211475 USDT, 총잔액=98.98381419 USDT
-2025-07-04 14:29:38 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:29:40 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:29:40 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:29:44 - trading_bot.cli           - INFO     - cli.py:640 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:29:44 - trading_bot.cli           - INFO     - cli.py:27 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:29:44 - trading_bot.cli           - INFO     - cli.py:394 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:29:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:29:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:29:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:29:45 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:29:45 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175163938506
-2025-07-04 14:29:45 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802913869201, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:355 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802913869201, 상태: finished
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:358 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:29:45 - trading_bot.cli           - WARNING  - cli.py:374 - 시장가 주문(36028802913869201) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:44 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010184, Price=$108015.8000, USDValue=$11.00
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:53 - Initial entry successful. Position opened.
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:85 - Position state updated for BTC_USDT: AvgEntryPrice=$108015.8000, TotalContracts=0.00010184, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:29:45 - trading_bot.cli           - INFO     - cli.py:406 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:29:45 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:29:45 - trading_bot.cli           - ERROR    - cli.py:510 - 전략 실행 중 예상치 못한 오류 발생 (심볼: BTC_USDT): float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 413, in run_strategy
-    show_summary(config, current_market_price, gate_client, current_bot_state)
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 217, in show_summary
-    pos_size = float(actual_position_info['size'])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'
-2025-07-04 14:31:45 - trading_bot.cli           - INFO     - cli.py:406 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:31:45 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:31:45 - trading_bot.cli           - ERROR    - cli.py:510 - 전략 실행 중 예상치 못한 오류 발생 (심볼: BTC_USDT): float() argument must be a string or a real number, not 'NoneType'
-Traceback (most recent call last):
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 413, in run_strategy
-    show_summary(config, current_market_price, gate_client, current_bot_state)
-  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 217, in show_summary
-    pos_size = float(actual_position_info['size'])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: float() argument must be a string or a real number, not 'NoneType'
-2025-07-04 14:33:22 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:33:22 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:33:23 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:33:23 - trading_bot.cli           - INFO     - cli.py:576 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:33:23 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:33:23 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '90.12488035',
- 'bonus': '0',
- 'cross_available': '90.12488035',
- 'cross_imr': '0',
- 'cross_initial_margin': '0',
- 'cross_maintenance_margin': '0',
- 'cross_margin_balance': '90.12488035',
- 'cross_mmr': '0',
- 'cross_order_margin': '0',
- 'cross_unrealised_pnl': '0',
- 'currency': 'USDT',
- 'enable_credit': False,
- 'enable_evolved_classic': True,
- 'enable_new_dual_mode': True,
- 'history': {'bonus_dnw': '0',
-             'bonus_offset': '0',
-             'dnw': '99',
-             'fee': '-0.19419839',
-             'fund': '0',
-             'pnl': '-0.01782',
-             'point_dnw': '0',
-             'point_fee': '0',
-             'point_refr': '0',
-             'refr': '0'},
- 'in_dual_mode': True,
- 'isolated_position_margin': '8.66310126',
- 'maintenance_margin': '0.20494027',
- 'margin_mode': 0,
- 'order_margin': '0',
- 'point': '0',
- 'position_initial_margin': '0',
- 'position_margin': '0',
- 'total': '98.78798161',
- 'unrealised_pnl': '-0.00836'}
-2025-07-04 14:33:23 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=90.12488035 USDT, 총잔액=98.78798161 USDT
-2025-07-04 14:33:23 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:33:25 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:33:25 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:644 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:27 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:398 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175163960929
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914002480, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:359 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914002480, 상태: finished
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:362 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:33:29 - trading_bot.cli           - WARNING  - cli.py:378 - 시장가 주문(36028802914002480) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:44 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010199, Price=$107852.4000, USDValue=$11.00
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:53 - Initial entry successful. Position opened.
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:83 - Position state updated for BTC_USDT: AvgEntryPrice=$107852.4000, TotalContracts=0.00010199, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:33:29 - trading_bot.cli           - INFO     - cli.py:410 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:33:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:33:29 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:33:29 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86821.1820 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107852.4000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:34:29 - trading_bot.cli           - INFO     - cli.py:410 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:34:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:34:29 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:34:29 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86821.1820 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107852.4000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:35:29 - trading_bot.cli           - INFO     - cli.py:410 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:35:29 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:35:29 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:35:29 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86821.1820 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107852.4000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:36:29 - trading_bot.cli           - INFO     - cli.py:410 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:36:30 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:36:30 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:36:30 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86821.1820 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107852.4000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:37:10 - trading_bot.cli           - WARNING  - cli.py:506 - 사용자 인터럽트 감지 (Ctrl+C). 봇을 안전하게 종료합니다.
-2025-07-04 14:37:10 - trading_bot.cli           - INFO     - cli.py:518 - 'BTC_USDT'에 대한 거래 전략 루프 종료.
-2025-07-04 14:37:10 - trading_bot.cli           - INFO     - cli.py:655 - ========== 자동매매 봇 CLI 종료 ==========
-2025-07-04 14:37:10 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:37:10 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:37:10 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:37:10 - trading_bot.cli           - INFO     - cli.py:567 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:37:10 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:37:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '87.9450678965',
- 'bonus': '0',
- 'cross_available': '87.9450678965',
- 'cross_imr': '0',
- 'cross_initial_margin': '0',
- 'cross_maintenance_margin': '0',
- 'cross_margin_balance': '87.9450678965',
- 'cross_mmr': '0',
- 'cross_order_margin': '0',
- 'cross_unrealised_pnl': '0',
- 'currency': 'USDT',
- 'enable_credit': False,
- 'enable_evolved_classic': True,
- 'enable_new_dual_mode': True,
- 'history': {'bonus_dnw': '0',
-             'bonus_offset': '0',
-             'dnw': '99',
-             'fee': '-0.199591015',
-             'fund': '0',
-             'pnl': '-0.01782',
-             'point_dnw': '0',
-             'point_fee': '0',
-             'point_refr': '0',
-             'refr': '0'},
- 'in_dual_mode': True,
- 'isolated_position_margin': '10.8375210885',
- 'maintenance_margin': '0.2561169125',
- 'margin_mode': 0,
- 'order_margin': '0',
- 'point': '0',
- 'position_initial_margin': '0',
- 'position_margin': '0',
- 'total': '98.782588985',
- 'unrealised_pnl': '-0.01958'}
-2025-07-04 14:37:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=87.9450678965 USDT, 총잔액=98.782588985 USDT
-2025-07-04 14:37:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:37:12 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:37:12 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:37:17 - trading_bot.cli           - INFO     - cli.py:636 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:37:17 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:37:17 - trading_bot.cli           - INFO     - cli.py:397 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:37:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:37:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:37:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:37:18 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:37:18 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175163983803
-2025-07-04 14:37:18 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914117925, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:357 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914117925, 상태: finished
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:37:18 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914117925) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010198, Price=$107869.2000, USDValue=$11.00
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:54 - Initial entry successful. Position opened.
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:84 - Position state updated for BTC_USDT: AvgEntryPrice=$107869.2000, TotalContracts=0.00010198, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:37:18 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:37:18 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:37:18 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:37:18 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86834.7060 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107869.2000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:499 - 'BTC_USDT'에 대한 거래 전략 루프 종료.
-2025-07-04 14:37:31 - trading_bot.cli           - WARNING  - cli.py:502 - 종료 신호 수신. 최종 포지션 청산 시도...
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:310 - stop_loss 주문: 전체 포지션 청산 시도. 계약수량=0.00010198, 추정USD가치=$11.00
-2025-07-04 14:37:31 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:37:31 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=short, 유형=market, 계약수량(size)=-1, TIF='ioc', 지정가=N/A, ReduceOnly=True, ClientOrderID=t-tradingbot-stop_loss17516398
-2025-07-04 14:37:31 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914126163, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:357 - STOP_LOSS 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914126163, 상태: finished
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 stop_loss 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:37:31 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914126163) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'stop_loss' fill: Contracts=-0.00010198, Price=$107857.3000, USDValue=$11.00
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:59 - STOP_LOSS resulted in full position closure for BTC_USDT.
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:32 - BotTradingState for BTC_USDT resetting...
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:41 - BotTradingState for BTC_USDT reset complete.
-2025-07-04 14:37:31 - trading_bot.cli           - INFO     - cli.py:683 - ========== 자동매매 봇 CLI 종료 ==========
-2025-07-04 14:43:39 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:43:39 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:43:39 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:43:39 - trading_bot.cli           - INFO     - cli.py:567 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:43:39 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:43:39 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.790019975',
- 'bonus': '0',
- 'cross_available': '98.790019975',
- 'cross_imr': '0',
- 'cross_initial_margin': '0',
- 'cross_maintenance_margin': '0',
- 'cross_margin_balance': '98.790019975',
- 'cross_mmr': '0',
- 'cross_order_margin': '0',
- 'cross_unrealised_pnl': '0',
- 'currency': 'USDT',
- 'enable_credit': False,
- 'enable_evolved_classic': True,
- 'enable_new_dual_mode': True,
- 'history': {'bonus_dnw': '0',
-             'bonus_offset': '0',
-             'dnw': '99',
-             'fee': '-0.237370025',
-             'fund': '0',
-             'pnl': '0.02739',
+             'pnl': '0.03972',
              'point_dnw': '0',
              'point_fee': '0',
              'point_refr': '0',
@@ -334,61 +73,24 @@ TypeError: float() argument must be a string or a real number, not 'NoneType'
  'point': '0',
  'position_initial_margin': '0',
  'position_margin': '0',
- 'total': '98.790019975',
+ 'total': '98.75910135',
  'unrealised_pnl': '0'}
-2025-07-04 14:43:39 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.790019975 USDT, 총잔액=98.790019975 USDT
-2025-07-04 14:43:39 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:43:41 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:43:41 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:43:46 - trading_bot.cli           - INFO     - cli.py:636 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:43:46 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:43:46 - trading_bot.cli           - INFO     - cli.py:397 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:43:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:43:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:43:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:43:47 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:43:47 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175164022707
-2025-07-04 14:43:47 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914281726, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:357 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914281726, 상태: finished
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:43:47 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914281726) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010187, Price=$107984.3000, USDValue=$11.00
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:54 - Initial entry successful. Position opened.
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:84 - Position state updated for BTC_USDT: AvgEntryPrice=$107984.3000, TotalContracts=0.00010187, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:43:47 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:43:47 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:43:47 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:43:47 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86927.3615 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107984.3000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:44:47 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:44:47 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:44:47 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:44:47 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86927.3615 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107984.3000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:499 - 'BTC_USDT'에 대한 거래 전략 루프 종료.
-2025-07-04 14:44:52 - trading_bot.cli           - WARNING  - cli.py:502 - 종료 신호 수신. 최종 포지션 청산 시도...
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:310 - stop_loss 주문: 전체 포지션 청산 시도. 계약수량=0.00010187, 추정USD가치=$11.00
-2025-07-04 14:44:52 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:44:52 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=short, 유형=market, 계약수량(size)=-1, TIF='ioc', 지정가=N/A, ReduceOnly=True, ClientOrderID=t-tradingbot-stop_loss17516402
-2025-07-04 14:44:52 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914306123, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:357 - STOP_LOSS 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914306123, 상태: finished
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 stop_loss 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:44:52 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914306123) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'stop_loss' fill: Contracts=-0.00010187, Price=$107936.0000, USDValue=$11.00
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:59 - STOP_LOSS resulted in full position closure for BTC_USDT.
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:32 - BotTradingState for BTC_USDT resetting...
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:41 - BotTradingState for BTC_USDT reset complete.
-2025-07-04 14:44:52 - trading_bot.cli           - INFO     - cli.py:683 - ========== 자동매매 봇 CLI 종료 ==========
-2025-07-04 14:45:07 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
-2025-07-04 14:45:07 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
-2025-07-04 14:45:07 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
-2025-07-04 14:45:07 - trading_bot.cli           - INFO     - cli.py:567 - ========== 자동매매 봇 CLI 시작 ==========
-2025-07-04 14:45:07 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
-2025-07-04 14:45:07 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.774164075',
+2025-07-06 13:48:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:48:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 13:49:51 - trading_bot.cli           - INFO     - cli.py:553 - 사용자가 자동매매 시작을 선택하지 않았습니다.
+2025-07-06 13:49:51 - trading_bot.cli           - INFO     - cli.py:556 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 13:50:46 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 13:50:46 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 13:50:46 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 13:50:46 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 13:50:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 13:50:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
  'bonus': '0',
- 'cross_available': '98.774164075',
+ 'cross_available': '98.75910135',
  'cross_imr': '0',
  'cross_initial_margin': '0',
  'cross_maintenance_margin': '0',
- 'cross_margin_balance': '98.774164075',
+ 'cross_margin_balance': '98.75910135',
  'cross_mmr': '0',
  'cross_order_margin': '0',
  'cross_unrealised_pnl': '0',
@@ -399,9 +101,9 @@ TypeError: float() argument must be a string or a real number, not 'NoneType'
  'history': {'bonus_dnw': '0',
              'bonus_offset': '0',
              'dnw': '99',
-             'fee': '-0.248165925',
+             'fee': '-0.28061865',
              'fund': '0',
-             'pnl': '0.02233',
+             'pnl': '0.03972',
              'point_dnw': '0',
              'point_fee': '0',
              'point_refr': '0',
@@ -414,74 +116,607 @@ TypeError: float() argument must be a string or a real number, not 'NoneType'
  'point': '0',
  'position_initial_margin': '0',
  'position_margin': '0',
- 'total': '98.774164075',
+ 'total': '98.75910135',
  'unrealised_pnl': '0'}
-2025-07-04 14:45:07 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.774164075 USDT, 총잔액=98.774164075 USDT
-2025-07-04 14:45:07 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
-2025-07-04 14:45:10 - trading_bot.config        - INFO     - config.py:158 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:45:10 - trading_bot.config        - INFO     - config.py:165 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:636 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:397 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 5, 'margin_mode': 'cross', 'entry_amount_usd': 11.0, 'max_split_count': 5, 'split_trigger_percents': [-0.8, -1.0, -1.2, -1.5, -2.0], 'split_amounts_usd': [12.0, 15.0, 18.0, 20.0, 23.0], 'take_profit_pct': 6.0, 'stop_loss_pct': 5.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 5x로 설정합니다.
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 5x로 업데이트 시도.
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175164031954
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914323530, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:357 - ENTRY 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914323530, 상태: finished
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 entry 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:45:19 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914323530) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=0.00010200, Price=$107842.0000, USDValue=$11.00
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:54 - Initial entry successful. Position opened.
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:84 - Position state updated for BTC_USDT: AvgEntryPrice=$107842.0000, TotalContracts=0.00010200, TotalInitialUSD=$11.00, IsInPosition=True
-2025-07-04 14:45:19 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:45:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:45:19 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:45:19 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:46:19 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:46:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:46:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:46:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:47:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:47:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:47:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:47:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:48:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:48:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:48:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:48:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:49:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:49:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:49:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:49:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:50:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:50:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:50:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:50:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:51:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:51:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:51:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:51:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:52:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:52:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:52:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:52:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:53:20 - trading_bot.cli           - INFO     - cli.py:409 - 'BTC_USDT' 전략 루프 시작. 현재 분할매수 횟수: 0
-2025-07-04 14:53:21 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:198 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
-2025-07-04 14:53:21 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
-2025-07-04 14:53:21 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 86812.8100 USDT, 예상 변동률: 19.50% (방향: long, 평균진입가: 107842.0000, 레버리지: 5x, 모드: cross)
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:499 - 'BTC_USDT'에 대한 거래 전략 루프 종료.
-2025-07-04 14:53:44 - trading_bot.cli           - WARNING  - cli.py:502 - 종료 신호 수신. 최종 포지션 청산 시도...
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:310 - stop_loss 주문: 전체 포지션 청산 시도. 계약수량=0.00010200, 추정USD가치=$10.99
-2025-07-04 14:53:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
-2025-07-04 14:53:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=short, 유형=market, 계약수량(size)=-1, TIF='ioc', 지정가=N/A, ReduceOnly=True, ClientOrderID=t-tradingbot-stop_loss17516408
-2025-07-04 14:53:44 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802914515977, 계약=BTC_USDT, 상태=finished
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:357 - STOP_LOSS 주문 성공적으로 API에 접수됨. 주문 ID: 36028802914515977, 상태: finished
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:360 - 시장가 stop_loss 주문 접수. 체결 가정하고 상태 업데이트 시도 (실제 체결 확인 필요).
-2025-07-04 14:53:44 - trading_bot.cli           - WARNING  - cli.py:376 - 시장가 주문(36028802914515977) 체결 정보 즉시 확인 불가. 현재가 기준으로 임시 상태 업데이트.
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'stop_loss' fill: Contracts=-0.00010200, Price=$107789.7000, USDValue=$10.99
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:59 - STOP_LOSS resulted in full position closure for BTC_USDT.
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:32 - BotTradingState for BTC_USDT resetting...
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:41 - BotTradingState for BTC_USDT reset complete.
-2025-07-04 14:53:44 - trading_bot.cli           - INFO     - cli.py:683 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 13:50:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:50:46 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 13:50:50 - trading_bot.config        - INFO     - config.py:119 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:50:50 - trading_bot.config        - INFO     - config.py:125 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:50:50 - trading_bot.config        - ERROR    - config.py:128 - 설정 파일 불러오기 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): BotConfig.__init__() got an unexpected keyword argument 'entry_amount_usd'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/config.py", line 126, in load
+    return cls.from_dict(data)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/config.py", line 99, in from_dict
+    return cls(**data)
+           ^^^^^^^^^^^
+TypeError: BotConfig.__init__() got an unexpected keyword argument 'entry_amount_usd'
+2025-07-06 13:50:50 - __main__                  - CRITICAL - main.py:101 - CLI 실행 중 예상치 못한 오류 발생: BotConfig.__init__() got an unexpected keyword argument 'entry_amount_usd'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 95, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1363, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1226, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 794, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 475, in main
+    user_choice = select_config(config_dir)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 420, in select_config
+    return BotConfig.load(selected_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/config.py", line 126, in load
+    return cls.from_dict(data)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/config.py", line 99, in from_dict
+    return cls(**data)
+           ^^^^^^^^^^^
+TypeError: BotConfig.__init__() got an unexpected keyword argument 'entry_amount_usd'
+2025-07-06 13:50:59 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 13:50:59 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 13:51:00 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 13:51:00 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 13:51:00 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 13:51:00 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
+ 'bonus': '0',
+ 'cross_available': '98.75910135',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.75910135',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.28061865',
+             'fund': '0',
+             'pnl': '0.03972',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.75910135',
+ 'unrealised_pnl': '0'}
+2025-07-06 13:51:00 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:51:00 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 13:52:32 - trading_bot.config        - INFO     - config.py:107 - BotConfig를 다음 경로에 저장 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:52:32 - trading_bot.config        - INFO     - config.py:111 - 설정이 성공적으로 저장되었습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:52:40 - trading_bot.cli           - INFO     - cli.py:513 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
+2025-07-06 13:52:40 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
+2025-07-06 13:52:40 - trading_bot.cli           - INFO     - cli.py:304 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 10, 'margin_mode': 'cross', 'entry_amount_pct_of_balance': 10.0, 'max_split_count': 5, 'split_trigger_percents': [-1.0, -1.5, -2.0, -2.5, -3.0], 'split_amounts_pct_of_balance': [12.0, 14.0, 16.0, 18.0, 20.0], 'take_profit_pct': 5.0, 'stop_loss_pct': 2.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 60, 'order_id_prefix': 't-tradingbot-'}
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
+ 'bonus': '0',
+ 'cross_available': '98.75910135',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.75910135',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.28061865',
+             'fund': '0',
+             'pnl': '0.03972',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.75910135',
+ 'unrealised_pnl': '0'}
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:52:40 - trading_bot.cli           - INFO     - cli.py:314 - 첫 진입 투자 금액 계산: 9.8759 USDT
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 10x로 설정합니다.
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 10x로 업데이트 시도.
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:102 - 계산된 계약 개수(0)가 최소 주문 단위(1 계약)보다 작습니다.
+2025-07-06 13:52:40 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:103 - 주문 금액(USD)을 늘리거나, 코인 가격이 변할 때까지 기다려야 합니다. 주문을 취소합니다.
+2025-07-06 13:52:40 - trading_bot.cli           - ERROR    - cli.py:299 - ENTRY 주문 실패 또는 API로부터 유효한 응답 받지 못함.
+2025-07-06 13:52:40 - trading_bot.cli           - CRITICAL - cli.py:316 - 초기 진입 주문 실패.
+2025-07-06 13:53:09 - trading_bot.cli           - INFO     - cli.py:556 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 13:53:19 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 13:53:19 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 13:53:20 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 13:53:20 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 13:53:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 13:53:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
+ 'bonus': '0',
+ 'cross_available': '98.75910135',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.75910135',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.28061865',
+             'fund': '0',
+             'pnl': '0.03972',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.75910135',
+ 'unrealised_pnl': '0'}
+2025-07-06 13:53:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:53:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 13:53:23 - trading_bot.config        - INFO     - config.py:119 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:53:23 - trading_bot.config        - INFO     - config.py:125 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 13:53:27 - trading_bot.cli           - INFO     - cli.py:513 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
+2025-07-06 13:53:27 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
+2025-07-06 13:53:27 - trading_bot.cli           - INFO     - cli.py:304 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 10, 'margin_mode': 'cross', 'entry_amount_pct_of_balance': 12.0, 'max_split_count': 5, 'split_trigger_percents': [-1.0, -1.5, -2.0, -2.5, -3.0], 'split_amounts_pct_of_balance': [12.0, 14.0, 16.0, 18.0, 20.0], 'take_profit_pct': 5.0, 'stop_loss_pct': 2.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 15, 'order_id_prefix': 't-tradingbot-'}
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:157 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.75910135',
+ 'bonus': '0',
+ 'cross_available': '98.75910135',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.75910135',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.28061865',
+             'fund': '0',
+             'pnl': '0.03972',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.75910135',
+ 'unrealised_pnl': '0'}
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:173 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.75910135 USDT, 총잔액=98.75910135 USDT
+2025-07-06 13:53:27 - trading_bot.cli           - INFO     - cli.py:314 - 첫 진입 투자 금액 계산: 11.8511 USDT
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:77 - 주문 전 BTC_USDT의 레버리지를 10x로 설정합니다.
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:287 - BTC_USDT 포지션 레버리지를 10x로 업데이트 시도.
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:294 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:120 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:139 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175181000734
+2025-07-06 13:53:27 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:147 - 주문 성공: ID=36028802954837729, 계약=BTC_USDT, 상태=finished
+2025-07-06 13:53:27 - trading_bot.cli           - INFO     - cli.py:283 - ENTRY 주문 성공적으로 API에 접수됨. ID: 36028802954837729, 상태: finished
+2025-07-06 13:53:42 - trading_bot.cli           - ERROR    - cli.py:384 - 긴급 정지 중 오류 발생: 'GateIOClient' object has no attribute 'list_all_positions'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 363, in handle_emergency_stop
+    open_positions = gate_client.list_all_positions()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GateIOClient' object has no attribute 'list_all_positions'
+2025-07-06 13:53:42 - trading_bot.cli           - INFO     - cli.py:556 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 14:01:55 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 14:01:55 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 14:01:56 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 14:01:56 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 14:01:56 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 14:01:56 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.757479995',
+ 'bonus': '0',
+ 'cross_available': '98.757479995',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.757479995',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.291510005',
+             'fund': '0',
+             'pnl': '0.04899',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.757479995',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:01:56 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.757479995 USDT, 총잔액=98.757479995 USDT
+2025-07-06 14:01:56 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 14:02:07 - trading_bot.config        - INFO     - config.py:119 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:02:07 - trading_bot.config        - INFO     - config.py:125 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:02:13 - trading_bot.cli           - INFO     - cli.py:513 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
+2025-07-06 14:02:13 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
+2025-07-06 14:02:13 - trading_bot.cli           - INFO     - cli.py:304 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 10, 'margin_mode': 'cross', 'entry_amount_pct_of_balance': 12.0, 'max_split_count': 5, 'split_trigger_percents': [-1.0, -1.5, -2.0, -2.5, -3.0], 'split_amounts_pct_of_balance': [12.0, 14.0, 16.0, 18.0, 20.0], 'take_profit_pct': 5.0, 'stop_loss_pct': 2.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 15, 'order_id_prefix': 't-tradingbot-'}
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.757479995',
+ 'bonus': '0',
+ 'cross_available': '98.757479995',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.757479995',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.291510005',
+             'fund': '0',
+             'pnl': '0.04899',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.757479995',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.757479995 USDT, 총잔액=98.757479995 USDT
+2025-07-06 14:02:13 - trading_bot.cli           - INFO     - cli.py:314 - 첫 진입 투자 금액 계산: 11.8509 USDT
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:76 - 주문 전 BTC_USDT의 레버리지를 10x로 설정합니다.
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:284 - BTC_USDT 포지션 레버리지를 10x로 업데이트 시도.
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:291 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:116 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:135 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175181053328
+2025-07-06 14:02:13 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:143 - 주문 성공: ID=36028802955151757, 계약=BTC_USDT, 상태=finished
+2025-07-06 14:02:13 - trading_bot.cli           - INFO     - cli.py:283 - ENTRY 주문 성공적으로 API에 접수됨. ID: 36028802955151757, 상태: finished
+2025-07-06 14:02:15 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:232 - 주문 상태 (ID: 36028802955151757): Status='finished', Size='1', AvgFillPrice='108748.3', Price='0'
+2025-07-06 14:02:15 - trading_bot.cli           - ERROR    - cli.py:295 - 시장가 주문(36028802955151757) 체결 정보 확인 실패. 상태 업데이트 불가.
+2025-07-06 14:02:15 - trading_bot.cli           - CRITICAL - cli.py:316 - 초기 진입 주문 실패.
+2025-07-06 14:02:51 - trading_bot.cli           - WARNING  - cli.py:541 - 메인 스레드에서 Ctrl+C 감지. 전략 스레드에 종료 신호 전송.
+2025-07-06 14:02:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:318 - 계정의 모든 활성 포지션 조회 시도...
+2025-07-06 14:02:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:326 - 총 1개의 활성 포지션을 발견했습니다.
+2025-07-06 14:02:51 - trading_bot.exchange_gateio - WARNING  - exchange_gateio.py:335 - 'BTC_USDT'에 대한 시장가 포지션 청산 시도...
+2025-07-06 14:02:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:02:51 - trading_bot.cli           - ERROR    - cli.py:384 - 긴급 정지 중 오류 발생: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 532, in main
+    user_input = input()
+                 ^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 375, in handle_emergency_stop
+    close_order_result = gate_client.close_position_market(contract)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 342, in close_position_market
+    position_size = int(current_position['size'])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-06 14:02:51 - trading_bot.cli           - INFO     - cli.py:556 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 14:07:31 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 14:07:31 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 14:07:31 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 14:07:31 - trading_bot.cli           - INFO     - cli.py:446 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 14:07:31 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 14:07:32 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.744566185',
+ 'bonus': '0',
+ 'cross_available': '98.744566185',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.744566185',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.302383815',
+             'fund': '0',
+             'pnl': '0.04695',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.744566185',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:07:32 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.744566185 USDT, 총잔액=98.744566185 USDT
+2025-07-06 14:07:32 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 14:07:34 - trading_bot.config        - INFO     - config.py:119 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:07:34 - trading_bot.config        - INFO     - config.py:125 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:07:37 - trading_bot.cli           - INFO     - cli.py:513 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
+2025-07-06 14:07:37 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
+2025-07-06 14:07:37 - trading_bot.cli           - INFO     - cli.py:304 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 10, 'margin_mode': 'cross', 'entry_amount_pct_of_balance': 12.0, 'max_split_count': 5, 'split_trigger_percents': [-1.0, -1.5, -2.0, -2.5, -3.0], 'split_amounts_pct_of_balance': [12.0, 14.0, 16.0, 18.0, 20.0], 'take_profit_pct': 5.0, 'stop_loss_pct': 2.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 15, 'order_id_prefix': 't-tradingbot-'}
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.744566185',
+ 'bonus': '0',
+ 'cross_available': '98.744566185',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.744566185',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.302383815',
+             'fund': '0',
+             'pnl': '0.04695',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.744566185',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.744566185 USDT, 총잔액=98.744566185 USDT
+2025-07-06 14:07:37 - trading_bot.cli           - INFO     - cli.py:314 - 첫 진입 투자 금액 계산: 11.8493 USDT
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:76 - 주문 전 BTC_USDT의 레버리지를 10x로 설정합니다.
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:284 - BTC_USDT 포지션 레버리지를 10x로 업데이트 시도.
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:291 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:116 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:135 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175181085774
+2025-07-06 14:07:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:143 - 주문 성공: ID=36028802955264610, 계약=BTC_USDT, 상태=finished
+2025-07-06 14:07:37 - trading_bot.cli           - INFO     - cli.py:283 - ENTRY 주문 성공적으로 API에 접수됨. ID: 36028802955264610, 상태: finished
+2025-07-06 14:07:39 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:232 - 주문 상태 (ID: 36028802955264610): Status='finished', Size='1', AvgFillPrice='108747.7', Price='0'
+2025-07-06 14:07:39 - trading_bot.cli           - ERROR    - cli.py:295 - 시장가 주문(36028802955264610) 체결 정보 확인 실패. 상태 업데이트 불가.
+2025-07-06 14:07:39 - trading_bot.cli           - CRITICAL - cli.py:316 - 초기 진입 주문 실패.
+2025-07-06 14:09:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:318 - 계정의 모든 활성 포지션 조회 시도...
+2025-07-06 14:09:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:326 - 총 1개의 활성 포지션을 발견했습니다.
+2025-07-06 14:09:01 - trading_bot.exchange_gateio - WARNING  - exchange_gateio.py:335 - 'BTC_USDT'에 대한 시장가 포지션 청산 시도...
+2025-07-06 14:09:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:09:01 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:339 - 'BTC_USDT'에 청산할 포지션이 없습니다.
+2025-07-06 14:09:01 - trading_bot.cli           - INFO     - cli.py:556 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-06 14:17:11 - __main__                  - INFO     - main.py:82 - 로깅 시스템 초기화 완료. 로그 레벨: INFO. 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-06 14:17:11 - __main__                  - INFO     - main.py:112 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-06 14:17:11 - __main__                  - INFO     - main.py:94 - CLI 애플리케이션 시작...
+2025-07-06 14:17:11 - trading_bot.cli           - INFO     - cli.py:447 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-06 14:17:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-06 14:17:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.732472025',
+ 'bonus': '0',
+ 'cross_available': '98.732472025',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.732472025',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.313257975',
+             'fund': '0',
+             'pnl': '0.04573',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.732472025',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:17:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.732472025 USDT, 총잔액=98.732472025 USDT
+2025-07-06 14:17:11 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-06 14:17:13 - trading_bot.config        - INFO     - config.py:119 - 다음 경로에서 BotConfig 로드 시도: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:17:13 - trading_bot.config        - INFO     - config.py:125 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json
+2025-07-06 14:17:17 - trading_bot.cli           - INFO     - cli.py:514 - 사용자 확인. 'BTC_USDT' 자동매매 시작.
+2025-07-06 14:17:17 - trading_bot.cli           - INFO     - cli.py:28 - BotTradingState for BTC_USDT initialized.
+2025-07-06 14:17:17 - trading_bot.cli           - INFO     - cli.py:304 - 'BTC_USDT'에 대한 거래 전략 시작. 설정: {'direction': 'long', 'symbol': 'BTC_USDT', 'leverage': 10, 'margin_mode': 'cross', 'entry_amount_pct_of_balance': 12.0, 'max_split_count': 5, 'split_trigger_percents': [-1.0, -1.5, -2.0, -2.5, -3.0], 'split_amounts_pct_of_balance': [12.0, 14.0, 16.0, 18.0, 20.0], 'take_profit_pct': 5.0, 'stop_loss_pct': 2.0, 'order_type': 'market', 'limit_order_slippage_pct': 0.05, 'repeat_after_take_profit': True, 'stop_bot_after_stop_loss': False, 'enable_stop_loss': True, 'check_interval_seconds': 15, 'order_id_prefix': 't-tradingbot-'}
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:153 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '98.732472025',
+ 'bonus': '0',
+ 'cross_available': '98.732472025',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '98.732472025',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': True,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-0.313257975',
+             'fund': '0',
+             'pnl': '0.04573',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': True,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '98.732472025',
+ 'unrealised_pnl': '0'}
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:169 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=98.732472025 USDT, 총잔액=98.732472025 USDT
+2025-07-06 14:17:17 - trading_bot.cli           - INFO     - cli.py:314 - 첫 진입 투자 금액 계산: 11.8479 USDT
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:76 - 주문 전 BTC_USDT의 레버리지를 10x로 설정합니다.
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:284 - BTC_USDT 포지션 레버리지를 10x로 업데이트 시도.
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:291 - BTC_USDT 레버리지 업데이트 성공. 새 레버리지: None, 모드: None
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:116 - 시장가 주문 감지. 주문 유효 기간(tif)을 기본값 'gtc'에서 'ioc'로 강제 변경합니다.
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:135 - 주문 시도: 심볼=BTC_USDT, 방향=long, 유형=market, 계약수량(size)=1, TIF='ioc', 지정가=N/A, ReduceOnly=False, ClientOrderID=t-tradingbot-entry175181143783
+2025-07-06 14:17:17 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:143 - 주문 성공: ID=36028802955503746, 계약=BTC_USDT, 상태=finished
+2025-07-06 14:17:17 - trading_bot.cli           - INFO     - cli.py:283 - ENTRY 주문 성공적으로 API에 접수됨. ID: 36028802955503746, 상태: finished
+2025-07-06 14:17:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:232 - 주문 상태 (ID: 36028802955503746): Status='finished', Size='1', AvgFillPrice='108822.4', Price='0'
+2025-07-06 14:17:19 - trading_bot.cli           - INFO     - cli.py:292 - 체결 정보 확인: 가격=$108822.4000, 계약수량=1.00000000
+2025-07-06 14:17:19 - trading_bot.cli           - INFO     - cli.py:45 - Updating position state for BTC_USDT due to 'entry' fill: Contracts=1.00000000, Price=$108822.4000, USDValue=$108822.40
+2025-07-06 14:17:19 - trading_bot.cli           - INFO     - cli.py:54 - Initial entry successful. Position opened.
+2025-07-06 14:17:19 - trading_bot.cli           - INFO     - cli.py:88 - Position state updated for BTC_USDT: AvgEntryPrice=$108822.4000, TotalContracts=1.00000000, TotalInitialUSD=$108822.40, IsInPosition=True
+2025-07-06 14:17:19 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:17:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:17:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:17:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:17:35 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:17:35 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:17:35 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:17:35 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:17:50 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:17:50 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:17:50 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:17:50 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:18:05 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:18:05 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:18:05 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:18:05 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:18:20 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:18:20 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:18:20 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:18:20 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:18:35 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:18:35 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:18:35 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:18:35 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:18:50 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:18:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:18:51 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:18:51 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:19:06 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:19:06 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:19:06 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:19:06 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:19:21 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:19:21 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:19:21 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:19:21 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:19:36 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:19:36 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:19:36 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:19:36 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:19:51 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:19:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:19:51 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:19:51 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:20:06 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:20:06 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:20:06 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:20:06 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:20:21 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:20:22 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:20:22 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:20:22 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:20:37 - trading_bot.cli           - INFO     - cli.py:321 - 'BTC_USDT' 전략 루프 시작. 분할매수 횟수: 0
+2025-07-06 14:20:37 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:20:37 - trading_bot.liquidation   - WARNING  - liquidation.py:86 - 교차 마진 청산가 계산은 단순 추정이며, 실제와 큰 차이가 있을 수 있습니다. 정확한 계산은 사용 가능한 전체 계좌 잔고와 다른 포지션 정보가 필요합니다.
+2025-07-06 14:20:37 - trading_bot.liquidation   - INFO     - liquidation.py:113 - 계산된 예상 청산가: 98484.2720 USDT, 예상 변동률: 9.50% (방향: long, 평균진입가: 108822.4000, 레버리지: 10x, 모드: cross)
+2025-07-06 14:20:50 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:318 - 계정의 모든 활성 포지션 조회 시도...
+2025-07-06 14:20:50 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:326 - 총 1개의 활성 포지션을 발견했습니다.
+2025-07-06 14:20:50 - trading_bot.exchange_gateio - WARNING  - exchange_gateio.py:335 - 'BTC_USDT'에 대한 시장가 포지션 청산 시도...
+2025-07-06 14:20:50 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:20:50 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:339 - 'BTC_USDT'에 청산할 포지션이 없습니다.
+2025-07-06 14:20:51 - trading_bot.cli           - INFO     - cli.py:350 - 'BTC_USDT' 전략 루프 종료.
+2025-07-06 14:20:51 - trading_bot.cli           - WARNING  - cli.py:352 - 종료 신호 수신. 최종 포지션 청산 시도...
+2025-07-06 14:20:51 - trading_bot.exchange_gateio - WARNING  - exchange_gateio.py:335 - 'BTC_USDT'에 대한 시장가 포지션 청산 시도...
+2025-07-06 14:20:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:194 - 포지션 정보 (BTC_USDT): Size=None, EntryPrice=None, Leverage=None, LiqPrice=None, UnrealisedPNL=None
+2025-07-06 14:20:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:339 - 'BTC_USDT'에 청산할 포지션이 없습니다.
+2025-07-06 14:20:51 - trading_bot.cli           - INFO     - cli.py:557 - ========== 자동매매 봇 CLI 종료 ==========
