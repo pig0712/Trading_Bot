@@ -9,4 +9,5 @@ dependencies = [
     "dotenv>=0.9.9",
     "gate-api>=6.97.2",
     "httpx>=0.28.1",
+    "pandas>=2.3.1",
 ]

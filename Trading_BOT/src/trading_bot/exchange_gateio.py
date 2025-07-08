@@ -330,22 +330,20 @@ class GateIOClient:
             return []
 
     # --- 여기가 추가된 부분입니다 (2/2): 시장가 포지션 청산 함수 ---
-    def close_position_market(self, contract_symbol: str) -> Optional[Dict[str, Any]]:
+    def close_position_market(self, contract_symbol: str, position_size_to_close: int) -> Optional[Dict[str, Any]]:
         """지정된 계약의 포지션을 시장가로 즉시 청산합니다."""
-        _LOG.warning(f"'{contract_symbol}'에 대한 시장가 포지션 청산 시도...")
+        _LOG.warning(f"'{contract_symbol}'에 대한 시장가 포지션 청산 시도... (청산 수량: {position_size_to_close})")
         
-        current_position = self.get_position(contract_symbol)
-        if not current_position or current_position.get('size') is None or int(current_position.get('size', 0)) == 0:
-            _LOG.info(f"'{contract_symbol}'에 청산할 포지션이 없습니다.")
+        # 더 이상 get_position을 호출하지 않고, 전달받은 수량을 신뢰합니다.
+        if position_size_to_close == 0:
+            _LOG.info(f"'{contract_symbol}'에 청산할 포지션 수량이 0입니다.")
             return None
-
-        position_size = int(current_position['size'])
         
         close_order_payload = FuturesOrder(
             contract=contract_symbol,
-            size=-position_size,
-            tif='ioc',
-            price='0',
+            size=-position_size_to_close, # 전달받은 포지션과 반대 수량
+            tif='ioc', # 시장가 청산
+            price='0', # 시장가
             reduce_only=True,
             text=f't-close-{contract_symbol[:10]}-{int(time.time())}'
         )
