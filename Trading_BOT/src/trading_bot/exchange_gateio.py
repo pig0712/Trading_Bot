@@ -32,7 +32,7 @@ class GateIOClient:
         current_api_config = Configuration(**_API_CFG_DEFAULTS)
         self.api_client = ApiClient(current_api_config)
         self.futures_api = FuturesApi(self.api_client)
-        
+
         _LOG.info(f"GateIOClient 초기화 완료. 정산 통화: '{self.settle}', 환경: '{GATE_ENV}', API 호스트: '{_BASE_URL}'")
         self._test_connectivity()
 
@@ -71,7 +71,6 @@ class GateIOClient:
         time_in_force: str = "gtc",
         order_id_prefix: str = "t-bot-"
     ) -> Optional[Dict[str, Any]]:
-        
         if not reduce_only:
             _LOG.info(f"주문 전 {contract_symbol}의 레버리지를 {leverage}x로 설정합니다.")
             try:
@@ -93,7 +92,9 @@ class GateIOClient:
         if contract_multiplier is None:
             return None
 
-        coin_quantity_to_order = order_amount_usd / current_market_price
+        # 레버리지 반영
+        effective_order_value = order_amount_usd * leverage
+        coin_quantity_to_order = effective_order_value / current_market_price
         num_contracts_to_order = int(coin_quantity_to_order / contract_multiplier)
 
         min_order_size = 1
@@ -103,7 +104,7 @@ class GateIOClient:
             return None
 
         api_order_size = num_contracts_to_order if position_side == "long" else -num_contracts_to_order
-        
+
         timestamp_ms = int(time.time() * 1000)
         client_order_id = f"{order_id_prefix}{timestamp_ms}"
         if not client_order_id.startswith("t-"):
@@ -115,7 +116,7 @@ class GateIOClient:
             if time_in_force not in ["ioc", "fok"]:
                 _LOG.info(f"시장가 주문 감지. 주문 유효 기간(tif)을 기본값 '{time_in_force}'에서 'ioc'로 강제 변경합니다.")
                 effective_tif = "ioc"
-        
+
         futures_order_payload = FuturesOrder(
             contract=contract_symbol,
             size=api_order_size,
@@ -132,12 +133,10 @@ class GateIOClient:
         else:
             futures_order_payload.price = "0"
 
-        _LOG.info(f"주문 시도: 심볼={contract_symbol}, 방향={position_side}, 유형={order_type}, "
-                  f"계약수량(size)={futures_order_payload.size}, TIF='{effective_tif}', 지정가={limit_price if limit_price else 'N/A'}, "
-                  f"ReduceOnly={reduce_only}, ClientOrderID={client_order_id}")
+        _LOG.info(f"주문 시도: 심볼={contract_symbol}, 방향={position_side}, 유형={order_type}, 계약수량(size)={futures_order_payload.size}, TIF='{effective_tif}', 지정가={limit_price if limit_price else 'N/A'}, ReduceOnly={reduce_only}, ClientOrderID={client_order_id}")
         try:
             created_order: FuturesOrder = self.futures_api.create_futures_order(
-                settle=self.settle, 
+                settle=self.settle,
                 futures_order=futures_order_payload
             )
             _LOG.info(f"주문 성공: ID={created_order.id}, 계약={created_order.contract}, 상태={created_order.status}")
