@@ -65,10 +65,19 @@ class BotConfig:
             if len(self.split_trigger_percents) != self.max_split_count:
                 errors.append(f"분할매수 트리거 퍼센트 리스트의 길이가 횟수({self.max_split_count})와 일치해야 합니다.")
             else:
-                if self.direction == "long" and any(p >= 0 for p in self.split_trigger_percents):
-                    errors.append("롱 포지션의 분할매수 트리거 퍼센트는 모두 음수여야 합니다.")
-                if self.direction == "short" and any(p <= 0 for p in self.split_trigger_percents):
-                    errors.append("숏 포지션의 분할매수 트리거 퍼센트는 모두 양수여야 합니다.")
+                # 분할매수(물타기)는 손실 상황(ROE가 음수)에서만 발생하므로,
+                # 트리거 퍼센트는 방향과 상관없이 항상 0보다 작은 음수여야 합니다.
+                if self.max_split_count > 0:
+                    if len(self.split_trigger_percents) != self.max_split_count:
+                        errors.append(f"분할매수 트리거 퍼센트 리스트의 길이가 횟수({self.max_split_count})와 일치해야 합니다.")
+                    # 💡 핵심 수정: 방향을 체크하지 않고, 모든 트리거가 음수인지 한번에 검사합니다.
+                    elif any(p >= 0 for p in self.split_trigger_percents):
+                        errors.append("분할매수 트리거 퍼센트는 모두 0보다 작은 음수여야 합니다 (예: -2.5).")
+
+                    if len(self.split_amounts_pct_of_balance) != self.max_split_count:
+                        errors.append(f"분할매수 금액 비율 리스트의 길이가 횟수({self.max_split_count})와 일치해야 합니다.")
+                    elif any(not (0 < pct <= 100) for pct in self.split_amounts_pct_of_balance):
+                        errors.append("분할매수 금액 비율은 모두 0보다 크고 100 이하여야 합니다.")
 
             if len(self.split_amounts_pct_of_balance) != self.max_split_count:
                 errors.append(f"분할매수 금액 비율 리스트의 길이가 횟수({self.max_split_count})와 일치해야 합니다.")
