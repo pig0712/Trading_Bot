@@ -268,7 +268,7 @@ def show_summary(config: BotConfig, current_market_price: Optional[float], gate_
         click.secho(f"  - 손익 금액(추정): {pnl_usd:,.2f} USDT", fg=pnl_color)
         click.secho(f"  - 손익률(ROE)   : {leveraged_roe_pct:.2f}%", fg=pnl_color)
         click.echo(f"  - 분할매수 횟수 : {current_bot_state.current_split_order_count} / {config.max_split_count}")
-        liq_price_calc, change_pct_calc = calculate_liquidation_price(
+        liq_price_calc, change_pct_calc = calculate_liquidation_price(   
             total_position_collateral_usd=current_bot_state.total_position_initial_usd,
             leverage=config.leverage, margin_mode=config.margin_mode,
             avg_entry_price=current_bot_state.current_avg_entry_price, position_direction=config.direction
@@ -376,10 +376,10 @@ def run_strategy(config: BotConfig, gate_client: GateIOClient, current_bot_state
                         continue
                     
                     base_config_dict["direction"] = determined_direction
-                    if determined_direction == "long":
-                        base_config_dict["split_trigger_percents"] = [abs(p) * -1 for p in config.split_trigger_percents]
-                    else:
-                        base_config_dict["split_trigger_percents"] = [abs(p) for p in config.split_trigger_percents]
+                    # 롱/숏 방향에 관계없이 분할매수 트리거는 항상 음수여야 합니다.
+                    base_config_dict["split_trigger_percents"] = [
+                        abs(p) * -1 for p in config.split_trigger_percents
+                    ]
 
                     new_config = BotConfig(**base_config_dict)
                     show_summary_final(new_config) # 사용자에게 새 방향 알림
@@ -598,11 +598,10 @@ def main(config_file: Optional[Path], smoke_test: bool, contract: str) -> None:
     final_config_dict = base_bot_configuration.to_dict()
     final_config_dict['direction'] = determined_direction
     
-    # 결정된 방향에 맞게 분할매수 트리거 퍼센트 조정
-    if determined_direction == "long":
-        final_config_dict['split_trigger_percents'] = [abs(p) * -1 for p in base_bot_configuration.split_trigger_percents]
-    else: # short
-        final_config_dict['split_trigger_percents'] = [abs(p) for p in base_bot_configuration.split_trigger_percents]
+    # 롱/숏 방향에 관계없이 분할매수 트리거는 항상 음수여야 합니다.
+    final_config_dict['split_trigger_percents'] = [
+        abs(p) * -1 for p in base_bot_configuration.split_trigger_percents
+    ]
     
     final_bot_configuration = BotConfig(**final_config_dict)
 

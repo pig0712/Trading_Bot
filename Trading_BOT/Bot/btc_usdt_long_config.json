@@ -6,11 +6,11 @@
   "entry_amount_pct_of_balance": 12.0,
   "max_split_count": 5,
   "split_trigger_percents": [
+    -0.8,
     -1.0,
+    -1.25,
     -1.5,
-    -2.0,
-    -2.5,
-    -3.0
+    -2.0
   ],
   "split_amounts_pct_of_balance": [
     12.0,
@@ -19,8 +19,8 @@
     18.0,
     20.0
   ],
-  "take_profit_pct": 5.0,
-  "stop_loss_pct": 3.5,
+  "take_profit_pct": 4.0,
+  "stop_loss_pct": 2.5,
   "order_type": "market",
   "limit_order_slippage_pct": 0.05,
   "repeat_after_take_profit": true,
