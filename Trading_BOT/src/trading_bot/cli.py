@@ -539,41 +539,63 @@ def run_strategy(config: BotConfig, gate_client: GateIOClient, current_bot_state
     _LOG.info(f"'{config.symbol}' 전략 루프 종료.")
     click.echo("\n전략 실행 루프가 정상적으로 종료되었습니다.")
 
-def determine_trade_direction(gate_client: GateIOClient, symbol: str, timeframe: str = '1h', short_window: int = 20, long_window: int = 50) -> Optional[Literal["long", "short"]]:
+def determine_trade_direction(gate_client: GateIOClient, symbol: str, timeframe: str = '15m', short_window: int = 20, long_window: int = 50, rsi_period: int = 14) -> Optional[Literal["long", "short"]]:
     """
-    이동평균선 교차를 기반으로 최적의 거래 방향을 결정합니다.
+    (개선) 이동평균선 교차와 RSI 지표를 결합하여 더 정밀하게 거래 방향을 결정합니다.
+    - SMA 골든 크로스 + RSI > 50  -> 'long'
+    - SMA 데드 크로스 + RSI < 50  -> 'short'
     """
-    click.secho(f"\n🔍 {timeframe} 봉 기준, {symbol}의 추세를 분석하여 최적 포지션을 결정합니다...", fg="cyan")
+    click.secho(f"\n🔍 {timeframe} 봉 기준, {symbol}의 추세를 정밀 분석합니다...", fg="cyan")
     _LOG.info(f"거래 방향 결정을 위해 {symbol}의 {timeframe} 캔들 데이터 조회 시작.")
     
     try:
+        # 1. 데이터 가져오기 (기존과 동일)
         candlesticks = gate_client.futures_api.list_futures_candlesticks(
-            settle='usdt', contract=symbol, interval=timeframe, limit=long_window + 5)
+            settle='usdt', contract=symbol, interval=timeframe, limit=long_window + rsi_period
+        )
         if not candlesticks or len(candlesticks) < long_window:
-            _LOG.error(f"방향 결정을 위한 캔들 데이터가 충분하지 않습니다 (필요: {long_window}, 확보: {len(candlesticks)}).")
+            _LOG.error(f"방향 결정을 위한 캔들 데이터가 충분하지 않습니다.")
             return None
 
-        df = pd.DataFrame([c.to_dict() for c in candlesticks], columns=['t', 'v', 'c', 'h', 'l', 'o'])
+        df = pd.DataFrame([c.to_dict() for c in candlesticks], columns=['t', 'c'])
         df['t'] = pd.to_datetime(df['t'], unit='s')
-        df.rename(columns={'t': 'timestamp', 'v': 'volume', 'c': 'close', 'h': 'high', 'l': 'low', 'o': 'open'}, inplace=True)
-        for col in ['open', 'high', 'low', 'close', 'volume']:
-            df[col] = pd.to_numeric(df[col])
-        
+        df.rename(columns={'t': 'timestamp', 'c': 'close'}, inplace=True)
+        df['close'] = pd.to_numeric(df['close'])
         df.set_index('timestamp', inplace=True)
         df.sort_index(inplace=True)
 
+        # 2. 이동평균선 계산 (기존과 동일)
         df['sma_short'] = df['close'].rolling(window=short_window).mean()
         df['sma_long'] = df['close'].rolling(window=long_window).mean()
 
-        last_short_sma = df['sma_short'].iloc[-1]
-        last_long_sma = df['sma_long'].iloc[-1]
+        # 3. ✅ RSI(상대강도지수) 계산 로직 추가
+        delta = df['close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=rsi_period).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=rsi_period).mean()
+        rs = gain / loss
+        df['rsi'] = 100 - (100 / (1 + rs))
 
-        if last_short_sma > last_long_sma:
-            click.secho(f"📈 상승 추세 감지. 'LONG' 포지션을 추천합니다.", fg="green")
+        # 4. 최종 데이터 추출
+        last_row = df.iloc[-1]
+        last_short_sma = last_row['sma_short']
+        last_long_sma = last_row['sma_long']
+        last_rsi = last_row['rsi']
+
+        _LOG.info(f"최신 지표 분석: 단기 SMA={last_short_sma:.2f}, 장기 SMA={last_long_sma:.2f}, RSI={last_rsi:.2f}")
+
+        # 5. ✅ 결합된 규칙으로 방향 결정
+        is_golden_cross = last_short_sma > last_long_sma
+        is_dead_cross = last_short_sma < last_long_sma
+        
+        if is_golden_cross and last_rsi > 50:
+            click.secho(f"📈 강한 상승 추세 감지 (골든 크로스 & RSI > 50). 'LONG' 포지션을 추천합니다.", fg="green")
             return "long"
-        else:
-            click.secho(f"📉 하락 추세 감지. 'SHORT' 포지션을 추천합니다.", fg="red")
+        elif is_dead_cross and last_rsi < 50:
+            click.secho(f"📉 강한 하락 추세 감지 (데드 크로스 & RSI < 50). 'SHORT' 포지션을 추천합니다.", fg="red")
             return "short"
+        else:
+            click.secho(f"횡보 또는 추세 불확실. 포지션을 추천하지 않습니다.", fg="yellow")
+            return None
 
     except Exception as e:
         _LOG.error(f"거래 방향 결정 중 예상치 못한 오류 발생: {e}", exc_info=True)
