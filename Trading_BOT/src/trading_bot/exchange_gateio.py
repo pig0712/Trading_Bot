@@ -49,20 +49,23 @@ class GateIOClient:
             _LOG.error(f"Failed to connect/authenticate with Gate.io API during connectivity test. Status: {e.status}, Body: {e.body}")
             raise
 
-    def get_contract_multiplier(self, contract_symbol: str) -> Optional[float]:
+    def get_contract_multiplier(self, contract_symbol: str) -> float:
+        try:
+            contract_details = self.futures_api.get_futures_contract(settle=self.settle, contract=contract_symbol)
+            if contract_details and contract_details.quanto_multiplier:
+                return float(contract_details.quanto_multiplier)
+        except Exception:
+            _LOG.warning(f"API로 '{contract_symbol}' 계약 단위 조회 실패. 기본값을 사용합니다.")
+        
         symbol_upper = contract_symbol.upper()
-        if "BTC" in symbol_upper:
-            return 0.0001
-        elif "ETH" in symbol_upper:
-            return 0.001
-        else:
-            _LOG.warning(f"'{contract_symbol}'에 대한 계약 단위를 알 수 없습니다. 기본값 1을 사용합니다.")
-            return 1.0
+        if "BTC" in symbol_upper: return 0.0001
+        elif "ETH" in symbol_upper: return 0.001
+        return 1.0
 
     def place_order(
         self,
         contract_symbol: str,
-        order_amount_usd: float,
+        order_amount_usd: float, # 사용자가 투입할 증거금 (예: 12 USDT)
         position_side: Literal["long", "short"],
         leverage: int,
         order_type: Literal["market", "limit"] = "market",
@@ -71,12 +74,25 @@ class GateIOClient:
         time_in_force: str = "gtc",
         order_id_prefix: str = "t-bot-"
     ) -> Optional[Dict[str, Any]]:
+        
+        # 1. 레버리지 설정 및 확인 (안전장치 강화)
         if not reduce_only:
             _LOG.info(f"주문 전 {contract_symbol}의 레버리지를 {leverage}x로 설정합니다.")
             try:
-                self.update_position_leverage(contract_symbol, leverage)
+                updated_pos_info = self.update_position_leverage(contract_symbol, str(leverage))
+                
+                if updated_pos_info and updated_pos_info.get('leverage'):
+                    actual_leverage = int(float(updated_pos_info.get('leverage')))
+                    if actual_leverage == leverage:
+                        _LOG.info(f"✅ 레버리지 설정 확인 완료: {actual_leverage}x")
+                    else:
+                        _LOG.error(f"❌ 레버리지 설정 실패! 의도: {leverage}x, 실제: {actual_leverage}x. 주문을 중단합니다.")
+                        return None
+                else:
+                    _LOG.error(f"❌ 레버리지 설정 후 상태 확인 실패. API 키 권한 또는 양방향 모드 설정을 확인하세요. 주문 중단.")
+                    return None
             except Exception as e:
-                _LOG.error(f"레버리지 설정 실패로 주문을 진행할 수 없습니다: {e}")
+                _LOG.error(f"레버리지 설정 중 예외 발생: {e}", exc_info=True)
                 return None
 
         if order_amount_usd <= 0:
@@ -84,39 +100,31 @@ class GateIOClient:
             return None
 
         current_market_price = self.fetch_last_price(contract_symbol)
-        if current_market_price is None:
+        if current_market_price is None or current_market_price <= 0:
             _LOG.error(f"{contract_symbol}의 현재가를 가져올 수 없어 주문 수량을 계산할 수 없습니다.")
             return None
 
         contract_multiplier = self.get_contract_multiplier(contract_symbol)
-        if contract_multiplier is None:
-            return None
 
-        # 레버리지 반영
+        # 2. 주문 수량 계산 로직 수정
+        # 증거금에 레버리지를 곱하여 총 포지션 가치를 계산
         effective_order_value = order_amount_usd * leverage
+        _LOG.info(f"주문 계산: 증거금 ${order_amount_usd:.2f} * {leverage}x 레버리지 = 총 포지션 가치 ${effective_order_value:.2f}")
+        
         coin_quantity_to_order = effective_order_value / current_market_price
         num_contracts_to_order = int(coin_quantity_to_order / contract_multiplier)
 
         min_order_size = 1
         if abs(num_contracts_to_order) < min_order_size:
             _LOG.error(f"계산된 계약 개수({num_contracts_to_order})가 최소 주문 단위({min_order_size} 계약)보다 작습니다.")
-            _LOG.error("주문 금액(USD)을 늘리거나, 코인 가격이 변할 때까지 기다려야 합니다. 주문을 취소합니다.")
             return None
 
         api_order_size = num_contracts_to_order if position_side == "long" else -num_contracts_to_order
+        
+        client_order_id = f"{order_id_prefix}{int(time.time() * 1000)}"[:30]
 
-        timestamp_ms = int(time.time() * 1000)
-        client_order_id = f"{order_id_prefix}{timestamp_ms}"
-        if not client_order_id.startswith("t-"):
-            client_order_id = "t-" + client_order_id
-        client_order_id = client_order_id[:30]
-
-        effective_tif = time_in_force
-        if order_type == "market":
-            if time_in_force not in ["ioc", "fok"]:
-                _LOG.info(f"시장가 주문 감지. 주문 유효 기간(tif)을 기본값 '{time_in_force}'에서 'ioc'로 강제 변경합니다.")
-                effective_tif = "ioc"
-
+        effective_tif = "ioc" if order_type == "market" and time_in_force not in ["ioc", "fok"] else time_in_force
+        
         futures_order_payload = FuturesOrder(
             contract=contract_symbol,
             size=api_order_size,
@@ -133,10 +141,10 @@ class GateIOClient:
         else:
             futures_order_payload.price = "0"
 
-        _LOG.info(f"주문 시도: 심볼={contract_symbol}, 방향={position_side}, 유형={order_type}, 계약수량(size)={futures_order_payload.size}, TIF='{effective_tif}', 지정가={limit_price if limit_price else 'N/A'}, ReduceOnly={reduce_only}, ClientOrderID={client_order_id}")
+        _LOG.info(f"주문 시도: {futures_order_payload.to_dict()}")
         try:
             created_order: FuturesOrder = self.futures_api.create_futures_order(
-                settle=self.settle,
+                settle=self.settle, 
                 futures_order=futures_order_payload
             )
             _LOG.info(f"주문 성공: ID={created_order.id}, 계약={created_order.contract}, 상태={created_order.status}")
@@ -184,22 +192,30 @@ class GateIOClient:
             raise
             
     def get_position(self, contract_symbol: str) -> Optional[Dict[str, Any]]:
-        _LOG.debug(f"포지션 정보 조회 시도: {contract_symbol}")
-        try:
-            position: Position = self.futures_api.get_position(settle=self.settle, contract=contract_symbol)
-            if position.size == 0:
-                _LOG.info(f"{contract_symbol}에 대한 활성 포지션 없음 (Size: 0).")
-            else:
-                _LOG.info(f"포지션 정보 ({contract_symbol}): Size={position.size}, EntryPrice={position.entry_price}, "
-                          f"Leverage={position.leverage}, LiqPrice={position.liq_price}, UnrealisedPNL={position.unrealised_pnl}")
-            return position.to_dict()
+        """일반 모드와 양방향 모드를 모두 조회하여 포지션 정보를 반환합니다."""
+        _LOG.debug(f"포지션 정보 조회 시도 (통합): {contract_symbol}")
+        
+        try: # 양방향 모드(Dual Mode) 먼저 시도
+            dual_position = self.futures_api.get_dual_mode_position(settle=self.settle, contract=contract_symbol)
+            if dual_position and (dual_position.long.size != 0 or dual_position.short.size != 0):
+                _LOG.info(f"양방향 모드 포지션 발견: Long Size={dual_position.long.size}, Short Size={dual_position.short.size}")
+                position_to_return = dual_position.long if dual_position.long.size != 0 else dual_position.short
+                return position_to_return.to_dict()
         except ApiException as e:
-            error_body_str = e.body if isinstance(e.body, str) else str(e.body)
-            if e.status == 400 and ("POSITION_NOT_FOUND" in error_body_str.upper() or "CONTRACT_NOT_FOUND" in error_body_str.upper()):
-                 _LOG.info(f"{contract_symbol}에 대한 포지션 없음 (API 응답: Status={e.status}, Body='{e.body}')")
-                 return {"contract": contract_symbol, "size": 0, "message": "No active position found"}
-            _LOG.error(f"Gate.io 포지션 조회 API 오류: Status={e.status}, Body='{e.body}'")
-            return None
+            if "POSITION_NOT_FOUND" not in str(e.body):
+                _LOG.warning(f"양방향 모드 조회 중 예상치 못한 API 오류: {e.body}")
+
+        try: # 양방향 모드에 포지션이 없으면, 일반 모드 조회 시도
+            position = self.futures_api.get_position(settle=self.settle, contract=contract_symbol)
+            if position and position.size != 0:
+                _LOG.info(f"일반 모드 포지션 발견: Size={position.size}")
+                return position.to_dict()
+        except ApiException as e:
+            if "POSITION_NOT_FOUND" not in str(e.body):
+                _LOG.warning(f"일반 모드 조회 중 예상치 못한 API 오류: {e.body}")
+        
+        _LOG.debug(f"{contract_symbol}에 대한 활성 포지션 없음.")
+        return {"contract": contract_symbol, "size": 0}
             
     def fetch_last_price(self, contract_symbol: str) -> Optional[float]:
         _LOG.debug(f"현재가 조회 시도: {contract_symbol}")

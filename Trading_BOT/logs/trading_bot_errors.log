@@ -1,0 +1,133 @@
+2025-07-16 14:39:28 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: non-default argument 'direction' follows default argument
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 110, in run_cli_app
+    from trading_bot.cli import main as cli_main_command
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 10, in <module>
+    from .config import BotConfig
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/config.py", line 13, in <module>
+    @dataclass
+     ^^^^^^^^^
+  File "/home/codespace/.local/share/uv/python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/dataclasses.py", line 1275, in dataclass
+    return wrap(cls)
+           ^^^^^^^^^
+  File "/home/codespace/.local/share/uv/python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/dataclasses.py", line 1265, in wrap
+    return _process_class(cls, init, repr, eq, order, unsafe_hash,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/share/uv/python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/dataclasses.py", line 1063, in _process_class
+    _init_fn(all_init_fields,
+  File "/home/codespace/.local/share/uv/python/cpython-3.12.10-linux-x86_64-gnu/lib/python3.12/dataclasses.py", line 585, in _init_fn
+    raise TypeError(f'non-default argument {f.name!r} '
+TypeError: non-default argument 'direction' follows default argument
+2025-07-16 14:43:01 - __main__                  - CRITICAL - main.py:116 - trading_bot.cli 모듈 임포트 실패. 'src' 디렉토리 및 의존성 설치를 확인하세요.
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 110, in run_cli_app
+    from trading_bot.cli import main as cli_main_command
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 12, in <module>
+    from .exchange_gateio import GateIOClient, ApiException
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 8, in <module>
+    from gate_api import (
+ImportError: cannot import name 'TriggerOrder' from 'gate_api' (/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/gate_api/__init__.py). Did you mean: 'TriggerTime'?
+2025-07-17 13:21:00 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: main() missing 3 required positional arguments: 'config_file', 'smoke_test', and 'contract'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+TypeError: main() missing 3 required positional arguments: 'config_file', 'smoke_test', and 'contract'
+2025-07-17 13:26:13 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: type object 'BotConfig' has no attribute 'load'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 696, in main
+    user_choice = select_config(config_dir)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 579, in select_config
+    return BotConfig.load(selected_file)
+           ^^^^^^^^^^^^^^
+AttributeError: type object 'BotConfig' has no attribute 'load'
+2025-07-17 14:42:04 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: Unknown color 'default'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 783, in main
+    show_summary_final(bot_configuration)
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 230, in show_summary_final
+    click.secho(f"{'피라미딩(불타기) 활성화:':<35} {pyramiding_enabled_str}", fg=pyramiding_color)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 682, in secho
+    message = style(message, **styles)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 611, in style
+    raise TypeError(f"Unknown color {fg!r}") from None
+TypeError: Unknown color 'default'
+2025-07-17 14:44:51 - trading_bot.cli           - ERROR    - cli.py:799 - 설정 파일 저장 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): 'BotConfig' object has no attribute 'save'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 797, in main
+    bot_configuration.save(final_save_path)
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotConfig' object has no attribute 'save'
+2025-07-17 14:45:09 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: 
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 802, in main
+    if click.confirm("\n▶️ 위 설정으로 자동매매를 시작하시겠습니까?", default=True):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 239, in confirm
+    raise Abort() from None
+click.exceptions.Abort
+2025-07-17 14:48:11 - trading_bot.cli           - ERROR    - cli.py:799 - 설정 파일 저장 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): 'BotConfig' object has no attribute 'save'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 797, in main
+    bot_configuration.save(final_save_path)
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotConfig' object has no attribute 'save'
+2025-07-17 14:52:55 - trading_bot.cli           - ERROR    - cli.py:799 - 설정 파일 저장 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): 'BotConfig' object has no attribute 'save'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 797, in main
+    bot_configuration.save(final_save_path)
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotConfig' object has no attribute 'save'
+2025-07-17 14:53:10 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: 
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 802, in main
+    if click.confirm("\n▶️ 위 설정으로 자동매매를 시작하시겠습니까?", default=True):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 239, in confirm
+    raise Abort() from None
+click.exceptions.Abort
+2025-07-18 14:19:59 - trading_bot.cli           - ERROR    - cli.py:799 - 설정 파일 저장 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): 'BotConfig' object has no attribute 'save'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 797, in main
+    bot_configuration.save(final_save_path)
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotConfig' object has no attribute 'save'
+2025-07-18 14:27:43 - trading_bot.cli           - ERROR    - cli.py:799 - 설정 파일 저장 실패 ('/workspaces/Trading_Bot/Trading_BOT/Bot/btc_usdt_long_config.json'): 'BotConfig' object has no attribute 'save'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 797, in main
+    bot_configuration.save(final_save_path)
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotConfig' object has no attribute 'save'
+2025-07-18 14:31:19 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: 
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 802, in main
+    if click.confirm("\n▶️ 위 설정으로 자동매매를 시작하시겠습니까?", default=True):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 239, in confirm
+    raise Abort() from None
+click.exceptions.Abort
+2025-07-18 14:33:26 - __main__                  - CRITICAL - main.py:119 - CLI 실행 중 예상치 못한 오류 발생: Unknown color 'default'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/main.py", line 113, in run_cli_app
+    cli_main_command()
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 783, in main
+    show_summary_final(bot_configuration)
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 230, in show_summary_final
+    click.secho(f"{'피라미딩(불타기) 활성화:':<35} {pyramiding_enabled_str}", fg=pyramiding_color)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 682, in secho
+    message = style(message, **styles)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 611, in style
+    raise TypeError(f"Unknown color {fg!r}") from None
+TypeError: Unknown color 'default'
