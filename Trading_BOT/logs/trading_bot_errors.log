@@ -131,3 +131,14 @@ Traceback (most recent call last):
   File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/termui.py", line 611, in style
     raise TypeError(f"Unknown color {fg!r}") from None
 TypeError: Unknown color 'default'
+2025-07-18 14:50:18 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:95 - 레버리지 설정 중 예외 발생: '<' not supported between instances of 'int' and 'str'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 82, in place_order
+    updated_pos_info = self.update_position_leverage(contract_symbol, str(leverage))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 295, in update_position_leverage
+    if not (0 < new_leverage <= 125):
+            ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'int' and 'str'
+2025-07-18 14:50:18 - trading_bot.cli           - ERROR    - cli.py:414 - ENTRY 주문 실패 또는 API로부터 유효한 응답 받지 못함.
+2025-07-18 14:50:18 - trading_bot.cli           - CRITICAL - cli.py:423 - 초기 진입 주문 실패.

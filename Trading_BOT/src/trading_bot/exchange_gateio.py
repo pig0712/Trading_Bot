@@ -291,25 +291,26 @@ class GateIOClient:
             _LOG.error(f"Gate.io {contract_symbol} 전체 주문 취소 API 오류: Status={e.status}, Body='{e.body}'")
             return []
 
-    def update_position_leverage(self, contract_symbol: str, new_leverage: int) -> Optional[Dict[str, Any]]:
-        if not (0 < new_leverage <= 125):
-            _LOG.error(f"잘못된 레버리지 값: {new_leverage}. 유효 범위 내여야 합니다.")
+    def update_position_leverage(self, contract_symbol: str, new_leverage: str) -> Optional[Dict[str, Any]]:
+        try:
+            # ✅ 전달받은 문자열을 검증을 위해 숫자로 변환합니다.
+            leverage_val = int(float(new_leverage))
+            if not (0 < leverage_val <= 125):
+                _LOG.error(f"잘못된 레버리지 값: {leverage_val}. 유효 범위 내여야 합니다.")
+                return None
+        except ValueError:
+            _LOG.error(f"레버리지 값이 숫자가 아닙니다: {new_leverage}")
             return None
 
         _LOG.info(f"{contract_symbol} 포지션 레버리지를 {new_leverage}x로 업데이트 시도.")
         try:
-            updated_position: Position = self.futures_api.update_position_leverage(
-                settle=self.settle,
-                contract=contract_symbol,
-                leverage=str(new_leverage)
+            # API에는 원래의 문자열 값을 전달합니다.
+            updated_position = self.futures_api.update_position_leverage(
+                settle=self.settle, contract=contract_symbol, leverage=new_leverage
             )
-            _LOG.info(f"{contract_symbol} 레버리지 업데이트 성공. 새 레버리지: {updated_position.leverage}, 모드: {updated_position.mode}")
             return updated_position.to_dict()
         except ApiException as e:
-            _LOG.error(f"Gate.io {contract_symbol} 레버리지 업데이트 API 오류: Status={e.status}, Body='{e.body}'")
-            raise
-        except AttributeError:
-            _LOG.error("현재 설치된 gate-api SDK 버전에 'update_position_leverage' 함수가 없거나 이름이 다를 수 있습니다. SDK 문서를 확인하세요.")
+            _LOG.error(f"레버리지 업데이트 API 오류: {e.body}")
             raise
 
     def get_open_orders(self, contract_symbol: str) -> List[Dict[str, Any]]:
