@@ -22,9 +22,13 @@ class BotTradingState:
         self.total_position_initial_usd: float = 0.0
         self.is_in_position: bool = False
         self.current_split_order_count: int = 0
-        self.active_take_profit_order_id: Optional[str] = None
-        self.active_stop_loss_order_id: Optional[str] = None
-        self.last_known_liquidation_price: Optional[float] = None
+        self.current_pyramiding_order_count: int = 0
+        self.last_entry_attempt_time: Optional[float] = None
+
+        # ✅ --- 추적 익절을 위한 상태 변수 추가 ---
+        self.is_in_trailing_mode: bool = False
+        self.highest_unrealised_pnl_usd: float = 0.0
+        
         _LOG.info(f"BotTradingState for {self.symbol} initialized.")
 
     def reset(self):
@@ -35,9 +39,13 @@ class BotTradingState:
         self.total_position_initial_usd = 0.0
         self.is_in_position = False
         self.current_split_order_count = 0
-        self.active_take_profit_order_id = None
-        self.active_stop_loss_order_id = None
-        self.last_known_liquidation_price = None
+        self.current_pyramiding_order_count = 0
+        self.last_entry_attempt_time = None
+
+        # ✅ --- 리셋 시 추적 익절 상태도 초기화 ---
+        self.is_in_trailing_mode = False
+        self.highest_unrealised_pnl_usd = 0.0
+        
         _LOG.info(f"BotTradingState for {self.symbol} reset complete.")
 
     def update_on_fill(self, filled_contracts: float, fill_price: float, filled_usd_value: float, order_purpose: str):
@@ -78,54 +86,105 @@ class BotTradingState:
             if order_purpose == "split":
                 self.current_split_order_count += 1
                 _LOG.info(f"Split order {self.current_split_order_count} successful.")
+            elif order_purpose == "pyramiding":
+                self.current_pyramiding_order_count += 1
+                _LOG.info(f"Pyramiding order {self.current_pyramiding_order_count} successful.")
 
         avg_price_str = f"{self.current_avg_entry_price:.4f}" if self.current_avg_entry_price is not None else "N/A"
-
         _LOG.info(f"Position state updated for {self.symbol}: AvgEntryPrice=${avg_price_str}, "
                   f"TotalContracts={self.total_position_contracts:.8f}, TotalInitialUSD=${self.total_position_initial_usd:.2f}, "
                   f"IsInPosition={self.is_in_position}")
 
-def prompt_config() -> Optional[BotConfig]:
+def prompt_config(gate_client: GateIOClient) -> Optional[BotConfig]:
     """사용자로부터 대화형으로 봇 설정을 입력받습니다."""
-    click.secho("\n" + "="*10 + " 📈 신규 거래 전략 설정 " + "="*10, fg="yellow", bold=True)
-    direction = click.prompt("👉 거래 방향 (long/short)", type=click.Choice(["long", "short"]), default="long")
+    click.secho("\n" + "="*10 + " 📈 신규 전략 설정 " + "="*10, fg="yellow", bold=True)
+    
+    auto_determine_direction = click.confirm("🤖 자동으로 포지션 방향(Long/Short)을 결정하시겠습니까?", default=False)
+    
+    direction = "long"
+    if not auto_determine_direction:
+        direction = click.prompt("👉 거래 방향 (long/short)", type=click.Choice(["long", "short"]), default="long")
+
     symbol = click.prompt("👉 거래 대상 코인 (예: BTC_USDT)", default="BTC_USDT").upper().strip()
     leverage = click.prompt("👉 레버리지 (예: 10)", type=int, default=10)
     margin_mode = click.prompt("👉 마진 모드 (cross/isolated)", type=click.Choice(["cross", "isolated"]), default="isolated")
-    click.secho("\n--- 💰 동적 자금 설정 (사용 가능 잔액 기준) ---", fg="green")
-    entry_amount_pct = click.prompt("👉 첫 진입 금액 (% of available balance)", type=float, default=10.0)
+    
+    click.secho("\n--- 💰 자금 설정 (사용 가능 잔액 기준) ---", fg="green")
+    entry_amount_pct = click.prompt("👉 첫 진입 금액 (% of available balance)", type=float, default=12.0)
+    
+    click.secho("\n--- 💧 분할매수(물타기) 설정 ---", fg="blue")
     max_split_count = click.prompt("👉 분할매수 횟수", type=int, default=5)
     split_trigger_percents: List[float] = []
     split_amounts_pct: List[float] = []
     if max_split_count > 0:
-        click.secho(f"👉 {max_split_count}번의 분할매수 트리거 퍼센트를 입력하세요 (손실 방향으로, 예: -10.0)", fg="cyan")
+        click.secho(f"👉 {max_split_count}번의 분할매수 트리거 퍼센트를 입력하세요 (손실률이므로 음수로 입력)", fg="cyan")
         for i in range(max_split_count):
-            trigger = click.prompt(f"  - {i+1}번째 분할 퍼센트 (%)", type=float, default=round(-10.0 - i*5.0, 1))
+            trigger = click.prompt(f"  - {i+1}번째 분할매수 손실률 (%)", type=float, default=round(-2.0 - i*2.0, 1))
             split_trigger_percents.append(trigger)
         click.secho(f"👉 {max_split_count}번의 분할매수 금액 비율을 입력하세요 (% of available balance)", fg="cyan")
         for i in range(max_split_count):
-            amount_pct = click.prompt(f"  - {i+1}번째 분할매수 금액 비율 (%)", type=float, default=round(12.0 + i*2, 1))
+            amount_pct = click.prompt(f"  - {i+1}번째 분할매수 금액 비율 (%)", type=float, default=round(12.0 + i*2, 1))
             split_amounts_pct.append(amount_pct)
-    take_profit_pct_str = click.prompt("👉 익절 퍼센트 (레버리지 적용된 포지션 수익률 %)", type=str, default="5.0")
-    take_profit_pct = float(take_profit_pct_str) if take_profit_pct_str.strip() else None
-    stop_loss_pct_str = click.prompt("👉 손절 퍼센트 (레버리지 적용된 포지션 손실률 %)", type=str, default="5.0")
+
+    click.secho("\n--- 🔥 피라미딩(불타기) 설정 ---", fg="magenta")
+    enable_pyramiding = click.confirm("수익이 날 때 추가 매수(피라미딩) 기능을 사용하시겠습니까?", default=False)
+    pyramiding_max_count = 0
+    pyramiding_trigger_percents = []
+    pyramiding_amounts_pct = []
+    if enable_pyramiding:
+        pyramiding_max_count = click.prompt("👉 피라미딩 횟수", type=int, default=3)
+        click.secho(f"👉 {pyramiding_max_count}번의 피라미딩 트리거 퍼센트를 입력하세요 (수익률이므로 양수로 입력)", fg="cyan")
+        for i in range(pyramiding_max_count):
+            trigger = click.prompt(f"  - {i+1}번째 추가 매수 수익률 (%)", type=float, default=round(2.0 + i*2.0, 1))
+            pyramiding_trigger_percents.append(trigger)
+        click.secho(f"👉 {pyramiding_max_count}번의 추가 매수 금액 비율을 입력하세요 (% of available balance)", fg="cyan")
+        for i in range(pyramiding_max_count):
+            amount_pct = click.prompt(f"  - {i+1}번째 추가 매수 금액 비율 (%)", type=float, default=10.0)
+            pyramiding_amounts_pct.append(amount_pct)
+
+    click.secho("\n--- ⚙️ 청산(Exit) 및 기타 설정 ---", fg="yellow")
+    
+    use_trailing_tp = click.confirm("💸 수익금 기준 추적 익절(Trailing Take Profit) 기능을 사용하시겠습니까?", default=True)
+    
+    trailing_tp_trigger_pct = None
+    trailing_tp_offset_pct = None
+    take_profit_pct = None
+
+    if use_trailing_tp:
+        trailing_tp_trigger_pct = click.prompt("  - 추적 익절 시작 ROE (%)", type=float, default=4.0)
+        trailing_tp_offset_pct = click.prompt("  - 최고 수익금 대비 하락 허용치 (%)", type=float, default=5.0)
+    else:
+        take_profit_pct_str = click.prompt("👉 일반 익절 ROE (%)", type=str, default="5.0")
+        take_profit_pct = float(take_profit_pct_str) if take_profit_pct_str.strip() else None
+
+    stop_loss_pct_str = click.prompt("👉 손절 ROE (%)", type=str, default="2.5")
     stop_loss_pct = float(stop_loss_pct_str) if stop_loss_pct_str.strip() else None
+    
     order_type = click.prompt("👉 주문 방식을 선택하세요 (market: 시장가 / limit: 지정가)", type=click.Choice(["market", "limit"]), default="market")
     click.echo("")
     repeat_after_tp = click.confirm("익절 후 반복 실행하시겠습니까? (y/n)", default=True)
     stop_after_sl = click.confirm("손절 후 봇을 정지하시겠습니까? (y/n)", default=False)
     enable_sl = click.confirm("손절 기능을 활성화하시겠습니까? (y/n)", default=True)
+    
     cfg_data = {
-        "direction": direction,
-        "symbol": symbol, "leverage": leverage, "margin_mode": margin_mode,
+        "auto_determine_direction": auto_determine_direction,
+        "direction": direction, "symbol": symbol, "leverage": leverage, "margin_mode": margin_mode,
         "entry_amount_pct_of_balance": entry_amount_pct,
         "max_split_count": max_split_count,
         "split_trigger_percents": split_trigger_percents,
         "split_amounts_pct_of_balance": split_amounts_pct,
-        "take_profit_pct": take_profit_pct, "stop_loss_pct": stop_loss_pct,
+        "enable_pyramiding": enable_pyramiding,
+        "pyramiding_max_count": pyramiding_max_count,
+        "pyramiding_trigger_percents": pyramiding_trigger_percents,
+        "pyramiding_amounts_pct_of_balance": pyramiding_amounts_pct,
+        "take_profit_pct": take_profit_pct, 
+        "stop_loss_pct": stop_loss_pct,
+        "trailing_take_profit_trigger_pct": trailing_tp_trigger_pct,
+        "trailing_take_profit_offset_pct": trailing_tp_offset_pct,
         "order_type": order_type,
-        "repeat_after_take_profit": repeat_after_tp, "stop_bot_after_stop_loss": stop_after_sl,
-        "enable_stop_loss": enable_sl
+        "repeat_after_take_profit": repeat_after_tp, 
+        "stop_bot_after_stop_loss": stop_after_sl,
+        "enable_stop_loss": enable_sl,
     }
     try:
         config = BotConfig(**cfg_data)
@@ -140,21 +199,55 @@ def prompt_config() -> Optional[BotConfig]:
 def show_summary_final(config: BotConfig):
     """최종 설정 요약을 출력합니다."""
     click.secho("\n" + "─"*18 + " 📊 최종 실행 설정 요약 " + "─"*18, fg="yellow", bold=True)
-    direction_color = "green" if config.direction == "long" else "red"
-    click.secho(f"{'거래 방향:':<35} {config.direction.upper()}", fg=direction_color, bold=True)
+    
+    # --- 거래 기본 설정 ---
+    if config.auto_determine_direction:
+        direction_title = "자동 결정된 거래 방향:"
+        direction_color = "cyan"
+    else:
+        direction_title = "거래 방향:"
+        direction_color = "green" if config.direction == "long" else "red"
+    click.secho(f"{direction_title:<35} {config.direction.upper()}", fg=direction_color, bold=True)
     click.echo(f"{'거래 대상 코인:':<35} {config.symbol}")
-    click.echo(f"{'레버리지:':<35} {config.leverage}")
+    click.echo(f"{'레버리지:':<35} {config.leverage}x")
     click.echo(f"{'마진 모드:':<35} {config.margin_mode}")
-    click.echo(f"{'첫 진입 금액 (% of available balance):':<35} {config.entry_amount_pct_of_balance}%")
-    click.echo(f"{'분할매수 횟수:':<35} {config.max_split_count}")
-    click.echo(f"{'분할매수 퍼센트 (레버리지 손익):':<35} {config.split_trigger_percents}")
-    click.echo(f"{'분할매수 금액 (% of available balance):':<35} {config.split_amounts_pct_of_balance}")
-    click.echo(f"{'익절 퍼센트 (레버리지 손익):':<35} {config.take_profit_pct}%")
-    click.echo(f"{'손절 퍼센트 (레버리지 손익):':<35} {config.stop_loss_pct}%")
     click.echo(f"{'주문 방식:':<35} {config.order_type}")
+    
+    click.echo("─" * 55)
+
+    # --- 자금 운용 설정 ---
+    click.echo(f"{'첫 진입 금액 (% of available balance):':<35} {config.entry_amount_pct_of_balance}%")
+    
+    # 분할매수(물타기) 설정 표시
+    click.secho(f"{'분할매수(물타기) 횟수:':<35} {config.max_split_count}회", fg="blue")
+    if config.max_split_count > 0:
+        click.echo(f"{'  - 트리거 손실률(%):':<35} {config.split_trigger_percents}")
+        click.echo(f"{'  - 추가 투입 비율(%):':<35} {config.split_amounts_pct_of_balance}")
+
+    # ✅ 피라미딩(불타기) 설정 표시
+    pyramiding_enabled_str = 'Yes' if config.enable_pyramiding else 'No'
+    pyramiding_color = "magenta" if config.enable_pyramiding else "default"
+    click.secho(f"{'피라미딩(불타기) 활성화:':<35} {pyramiding_enabled_str}", fg=pyramiding_color)
+    
+    if config.enable_pyramiding:
+        click.echo(f"{'  - 피라미딩 횟수:':<35} {config.pyramiding_max_count}회")
+        click.echo(f"{'  - 트리거 수익률(%):':<35} {config.pyramiding_trigger_percents}")
+        click.echo(f"{'  - 추가 투입 비율(%):':<35} {config.pyramiding_amounts_pct_of_balance}")
+        
+    click.echo("─" * 55)
+
+    # --- 리스크 관리 설정 ---
+    click.echo(f"{'익절 퍼센트 (레버리지 손익):':<35} {config.take_profit_pct}%")
+    click.secho(f"{'손절 기능 활성화:':<35} {'Yes' if config.enable_stop_loss else 'No'}", fg="red" if config.enable_stop_loss else "default")
+    if config.enable_stop_loss:
+        click.echo(f"{'손절 퍼센트 (레버리지 손익):':<35} {config.stop_loss_pct}%")
+    
+    click.echo("─" * 55)
+
+    # --- 봇 운영 정책 ---
     click.echo(f"{'익절 후 반복 실행:':<35} {'Yes' if config.repeat_after_take_profit else 'No'}")
     click.echo(f"{'손절 후 봇 정지:':<35} {'Yes' if config.stop_bot_after_stop_loss else 'No'}")
-    click.echo(f"{'손절 기능 활성화:':<35} {'Yes' if config.enable_stop_loss else 'No'}")
+
     click.echo("─"*55)
 
 def show_summary(config: BotConfig, current_market_price: Optional[float], gate_client: GateIOClient, current_bot_state: BotTradingState):
@@ -230,9 +323,28 @@ def show_summary(config: BotConfig, current_market_price: Optional[float], gate_
         click.echo(" 	(현재 봇 내부 추적 포지션 없음)")
     click.echo("="*50 + "\n")
 
-def _execute_order_and_update_state(gate_client: GateIOClient, config: BotConfig, current_bot_state: BotTradingState, order_usd_amount: float, order_purpose: Literal["entry", "split", "take_profit", "stop_loss", "emergency_close"]) -> bool:
-    """주문 실행 및 상태 업데이트 헬퍼 함수"""
+def _execute_order_and_update_state(gate_client: GateIOClient, config: BotConfig, current_bot_state: BotTradingState, order_usd_amount: float, order_purpose: Literal["entry", "split", "pyramiding", "take_profit", "stop_loss", "emergency_close"]) -> bool:
+    """주문 실행 및 상태 업데이트 헬퍼 함수 (피라미딩 기능 추가)"""
     is_closing_order = order_purpose in ["take_profit", "stop_loss", "emergency_close"]
+    
+    if order_purpose in ["entry", "split", "pyramiding"]:
+        account_info = gate_client.get_account_info()
+        if not account_info or 'available' not in account_info:
+            _LOG.error(f"주문을 위한 계좌 정보 조회 실패 ({order_purpose})")
+            return False
+        available_balance = float(account_info['available'])
+        
+        pct_of_balance = 0.0
+        if order_purpose == "entry":
+            pct_of_balance = config.entry_amount_pct_of_balance
+        elif order_purpose == "split":
+            pct_of_balance = config.split_amounts_pct_of_balance[current_bot_state.current_split_order_count]
+        elif order_purpose == "pyramiding":
+            pct_of_balance = config.pyramiding_amounts_pct_of_balance[current_bot_state.current_pyramiding_order_count]
+        
+        order_usd_amount = available_balance * (pct_of_balance / 100.0)
+        _LOG.info(f"'{order_purpose}' 투자 금액 계산: {order_usd_amount:.4f} USDT")
+
     reduce_only_flag = is_closing_order
     if is_closing_order:
         if not current_bot_state.is_in_position:
@@ -241,11 +353,16 @@ def _execute_order_and_update_state(gate_client: GateIOClient, config: BotConfig
         order_execution_side = "short" if config.direction == "long" else "long"
     else:
         order_execution_side = config.direction
+
     order_id_suffix = f"{order_purpose}"
     if order_purpose == 'split':
         order_id_suffix += f"-{current_bot_state.current_split_order_count + 1}"
+    elif order_purpose == 'pyramiding':
+        order_id_suffix += f"-{current_bot_state.current_pyramiding_order_count + 1}"
+
     full_order_id_prefix = config.order_id_prefix + order_id_suffix
     usd_amount_for_api_call = order_usd_amount
+    
     if is_closing_order:
         current_market_price = gate_client.fetch_last_price(config.symbol)
         if current_market_price is None:
@@ -258,16 +375,24 @@ def _execute_order_and_update_state(gate_client: GateIOClient, config: BotConfig
                 current_bot_state.reset()
             return False
         usd_amount_for_api_call = position_value_usd
+
     effective_order_type = "market" if is_closing_order else config.order_type
+    
     order_result = gate_client.place_order(
         contract_symbol=config.symbol, order_amount_usd=usd_amount_for_api_call,
         position_side=order_execution_side, leverage=config.leverage,
         order_type=effective_order_type, reduce_only=reduce_only_flag,
         order_id_prefix=full_order_id_prefix
     )
+    
     if order_result and order_result.get("id"):
         order_id = order_result.get("id")
         _LOG.info(f"{order_purpose.upper()} 주문 성공적으로 API에 접수됨. ID: {order_id}, 상태: {order_result.get('status')}")
+        
+        if order_purpose in ["entry", "split", "pyramiding"]:
+            current_bot_state.last_entry_attempt_time = time.time()
+            _LOG.info(f"'{order_purpose}' 주문 타임스탬프 기록: {current_bot_state.last_entry_attempt_time}")
+
         if effective_order_type == "market":
             time.sleep(2)
             filled_order_info = gate_client.get_order_status(order_id)
@@ -290,112 +415,170 @@ def _execute_order_and_update_state(gate_client: GateIOClient, config: BotConfig
         return False
 
 def run_strategy(config: BotConfig, gate_client: GateIOClient, current_bot_state: BotTradingState, stop_event: threading.Event):
-    """메인 거래 전략 실행 루프"""
+    """메인 거래 전략 실행 루프 (피라미딩 및 추적 익절 기능 추가 최종 버전)"""
     _LOG.info(f"'{config.symbol}'에 대한 거래 전략 시작. 설정: {config.to_dict()}")
+
     if not current_bot_state.is_in_position:
-        click.secho(f"\n🚀 초기 진입 주문 시도 ({config.direction.upper()}) for {config.symbol}...", fg="green", bold=True)
-        account_info = gate_client.get_account_info()
-        if not account_info or not account_info.get('available'):
-            _LOG.critical("초기 진입 위한 계좌 잔액 조회 실패. 전략 시작 불가.")
-            return
-        available_balance = float(account_info['available'])
-        entry_usd_to_invest = available_balance * (config.entry_amount_pct_of_balance / 100.0)
-        _LOG.info(f"첫 진입 투자 금액 계산: {entry_usd_to_invest:.4f} USDT")
-        if not _execute_order_and_update_state(gate_client, config, current_bot_state, entry_usd_to_invest, "entry"):
+        if not _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "entry"):
             _LOG.critical("초기 진입 주문 실패.")
             return
+
     while not stop_event.is_set():
         try:
-            if not current_bot_state.is_in_position:
-                if config.repeat_after_take_profit:
-                    _LOG.info(f"포지션 없음. '익절 후 반복' 설정에 따라 재진입 시도.")
-                    click.secho(f"\n🔁 익절 완료. 설정에 따라 '{config.direction.upper()}' 포지션으로 재진입을 시도합니다...", fg="cyan")
+            click.clear()
+            actual_position = gate_client.get_position(config.symbol)
+            pretty_show_summary(config, current_bot_state, actual_position)
+            
+            position_size_raw = actual_position.get('size') if actual_position else None
+            actual_pos_size = float(position_size_raw) if position_size_raw is not None else 0.0
+
+            # --- CASE 1: 실제 포지션이 "있을" 경우 ---
+            if actual_pos_size != 0:
+                if not current_bot_state.is_in_position:
+                    _LOG.warning("상태 불일치 복구: 실제 포지션이 있으므로 내부 상태를 '진입'으로 변경합니다.")
+                    current_bot_state.is_in_position = True
+                
+                # ✅ 실제 API 데이터를 기준으로 현재 수익금(USDT)과 ROE(%)를 가져옵니다.
+                margin_used = float(actual_position.get('margin', 0))
+                current_unrealised_pnl = float(actual_position.get('unrealised_pnl', 0))
+                leveraged_roe_pct = (current_unrealised_pnl / margin_used) * 100 if margin_used > 1e-9 else 0.0
+
+                # --- 💡 핵심 로직: 봇의 모드에 따라 다른 행동 수행 💡 ---
+
+                # ✅ 모드 A: 추적 익절 모드
+                if current_bot_state.is_in_trailing_mode:
+                    # 1. 최고 수익금(USDT) 업데이트
+                    current_bot_state.highest_unrealised_pnl_usd = max(
+                        current_bot_state.highest_unrealised_pnl_usd,
+                        current_unrealised_pnl
+                    )
+                    
+                    # 2. 익절 라인(USDT) 계산
+                    exit_profit_level = current_bot_state.highest_unrealised_pnl_usd * (1 - (config.trailing_take_profit_offset_pct / 100.0))
+                    
+                    # 3. 본전 이하로 내려가지 않도록 최소 익절선 보장
+                    breakeven_profit = 0.1 # 수수료 감안 최소 익절 금액
+                    final_exit_level = max(exit_profit_level, breakeven_profit)
+
+                    _LOG.info(f"추적 익절 모드: 최고수익 ${current_bot_state.highest_unrealised_pnl_usd:.2f}, 현재수익 ${current_unrealised_pnl:.2f}, 익절라인 ${final_exit_level:.2f}")
+
+                    # 4. 추적 익절 조건 확인
+                    if current_unrealised_pnl <= final_exit_level:
+                        _LOG.info(f"💸 추적 익절 실행!")
+                        _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "take_profit")
+                        continue
+
+                # ✅ 모드 B: 일반 모드 (추적 익절 모드로 전환 전)
+                else:
+                    # 추적 익절 모드 전환 조건 확인
+                    if config.trailing_take_profit_trigger_pct and leveraged_roe_pct >= config.trailing_take_profit_trigger_pct:
+                        _LOG.info(f"🔥 추적 익절 및 피라미딩 모드로 전환! (현재 ROE: {leveraged_roe_pct:.2f}%)")
+                        current_bot_state.is_in_trailing_mode = True
+                        current_bot_state.highest_unrealised_pnl_usd = current_unrealised_pnl
+                        
+                        # 피라미딩 기능이 켜져있으면 즉시 실행
+                        if config.enable_pyramiding and current_bot_state.current_pyramiding_order_count < config.pyramiding_max_count:
+                            _LOG.info(f"🔥 피라미딩 1회차 실행.")
+                            _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "pyramiding")
+                        continue
+                    
+                    # 일반 익절 조건 확인 (추적 익절을 사용하지 않을 때만 해당)
+                    elif config.take_profit_pct and leveraged_roe_pct >= config.take_profit_pct:
+                        _LOG.info(f"일반 익절 조건 도달.")
+                        _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "take_profit")
+                        continue
+
+                # --- 공통 로직: 손절 및 분할매수(물타기)는 항상 확인 ---
+                if config.enable_stop_loss and config.stop_loss_pct and leveraged_roe_pct <= -config.stop_loss_pct:
+                    _LOG.warning(f"손절 조건 도달.")
+                    if _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "stop_loss"):
+                        if config.stop_bot_after_stop_loss: break
+                    continue
+                
+                if current_bot_state.current_split_order_count < config.max_split_count:
+                    next_split_trigger_pct = config.split_trigger_percents[current_bot_state.current_split_order_count]
+                    if leveraged_roe_pct <= next_split_trigger_pct:
+                        _LOG.info(f"분할매수(물타기) 조건 도달.")
+                        _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "split")
+            
+            # ✅ CASE 2: 실제 포지션이 "없을" 경우 (재진입 로직)
+            else:
+                if current_bot_state.is_in_position:
+                    _LOG.warning("상태 불일치 감지! 내부 상태를 '포지션 없음'으로 리셋합니다.")
                     current_bot_state.reset()
-                    account_info = gate_client.get_account_info()
-                    if account_info and account_info.get('available'):
-                        available_balance = float(account_info['available'])
-                        entry_usd_to_invest = available_balance * (config.entry_amount_pct_of_balance / 100.0)
-                        if not _execute_order_and_update_state(gate_client, config, current_bot_state, entry_usd_to_invest, "entry"):
+                
+                grace_period_seconds = 30 
+                last_attempt_time = current_bot_state.last_entry_attempt_time or 0
+
+                if time.time() - last_attempt_time < grace_period_seconds:
+                    _LOG.info(f"주문 직후 유예 시간({grace_period_seconds}초) 입니다. 대기합니다.")
+                else:
+                    if config.repeat_after_take_profit:
+                        _LOG.info("유예 시간이 지나 '실제 포지션 없음'으로 최종 판단. 재진입 시도.")
+                        if not _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "entry"):
                             _LOG.error("재진입 주문에 실패했습니다. 다음 루프에서 재시도합니다.")
                     else:
-                        _LOG.error("재진입을 위한 계좌 정보 조회에 실패했습니다.")
-                else:
-                    _LOG.info("포지션 없음. 반복 설정이 꺼져있으므로 전략을 종료합니다.")
-                    break
-                time.sleep(config.check_interval_seconds)
-                continue
-            _LOG.info(f"'{config.symbol}' 전략 루프 시작. 분할매수 횟수: {current_bot_state.current_split_order_count}")
-            current_market_price = gate_client.fetch_last_price(config.symbol)
-            if current_market_price is None:
-                _LOG.warning(f"현재가를 가져올 수 없습니다. 다음 루프에서 재시도합니다.")
-                time.sleep(config.check_interval_seconds)
-                continue
-            show_summary(config, current_market_price, gate_client, current_bot_state)
-            avg_price = current_bot_state.current_avg_entry_price
-            if avg_price is None or avg_price <= 1e-9:
-                _LOG.warning("평균 진입가가 없어 PnL 계산이 불가합니다. 다음 루프에서 재시도합니다.")
-                time.sleep(config.check_interval_seconds)
-                continue
-            
-            market_pnl_pct = (current_market_price - avg_price) / avg_price
-            if config.direction == "short":
-                market_pnl_pct *= -1
-            
-            leveraged_roe_pct = market_pnl_pct * config.leverage * 100
-            _LOG.info(f"시장 변동률: {market_pnl_pct*100:.4f}%, 레버리지 적용 손익(ROE): {leveraged_roe_pct:.4f}%")
+                        _LOG.info("반복 설정이 꺼져있으므로 전략을 종료합니다.")
+                        break
 
-            if config.take_profit_pct and leveraged_roe_pct >= config.take_profit_pct:
-                _LOG.info(f"익절 조건 도달 (현재 ROE: {leveraged_roe_pct:.2f}% >= 목표: {config.take_profit_pct}%)")
-                _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "take_profit")
-                # 익절 후에는 루프 시작 부분에서 재진입 로직을 타게 됨
-                continue
-
-            if config.enable_stop_loss and config.stop_loss_pct and leveraged_roe_pct <= -config.stop_loss_pct:
-                _LOG.warning(f"손절 조건 도달 (현재 ROE: {leveraged_roe_pct:.2f}% <= 목표: -{config.stop_loss_pct}%)")
-                _execute_order_and_update_state(gate_client, config, current_bot_state, 0, "stop_loss")
-                if config.stop_bot_after_stop_loss:
-                    _LOG.warning("손절 후 봇 자동 정지 설정에 따라 봇을 종료합니다.")
-                    break
-                # 손절 후에는 루프 시작 부분에서 재진입 로직을 타게 됨
-                continue
-            
-            if current_bot_state.current_split_order_count < config.max_split_count:
-                next_split_trigger_pct = config.split_trigger_percents[current_bot_state.current_split_order_count]
-                if leveraged_roe_pct <= next_split_trigger_pct:
-                    _LOG.info(f"분할매수 조건 도달. (현재 ROE: {leveraged_roe_pct:.2f}%, 트리거: {next_split_trigger_pct}%)")
-                    account_info = gate_client.get_account_info()
-                    if account_info and account_info.get('available'):
-                        available_balance = float(account_info['available'])
-                        split_amount_pct = config.split_amounts_pct_of_balance[current_bot_state.current_split_order_count]
-                        split_usd_to_invest = available_balance * (split_amount_pct / 100.0)
-                        _execute_order_and_update_state(gate_client, config, current_bot_state, split_usd_to_invest, "split")
-                    else:
-                        _LOG.error("분할매수를 위한 계좌 정보 조회에 실패했습니다.")
-
+            # --- 대기 시간 (진행률 표시줄) ---
             if not stop_event.is_set():
-                _LOG.debug(f"{config.check_interval_seconds}초 대기...")
-                for _ in range(config.check_interval_seconds):
-                    if stop_event.is_set(): break
-                    time.sleep(1)
+                wait_seconds = config.check_interval_seconds
+                label = f" 다음 확인까지 [{wait_seconds}초] 대기 중..."
+                with click.progressbar(length=wait_seconds, label=label, fill_char='█', empty_char='-') as bar:
+                    for _ in range(wait_seconds):
+                        if stop_event.is_set(): break
+                        time.sleep(1)
+                        bar.update(1)
+
         except Exception as e:
             _LOG.error(f"전략 실행 중 예상치 못한 오류: {e}", exc_info=True)
-            time.sleep(config.check_interval_seconds)
+            click.secho(f"\n❌ 오류 발생: {e}. 10초 후 재시도...", fg="red")
+            time.sleep(10)
     
     _LOG.info(f"'{config.symbol}' 전략 루프 종료.")
-    if stop_event.is_set():
-        _LOG.warning("종료 신호 수신. 최종 포지션 정리 상태를 확인합니다...")
-        time.sleep(1)
-        final_position = gate_client.get_position(config.symbol)
-        if final_position and final_position.get('size') is not None and int(float(final_position.get('size', 0))) != 0:
-            pos_size = int(float(final_position.get('size')))
-            _LOG.info(f"아직 포지션({pos_size})이 남아있어 최종 청산을 시도합니다.")
-            if gate_client.close_position_market(config.symbol, pos_size):
-                click.secho(f"✅ {config.symbol} 포지션이 성공적으로 청산되었습니다.", fg="green")
-            else:
-                click.secho(f"❌ {config.symbol} 포지션 청산 실패. 거래소 확인 필요.", fg="red")
-        else:
-            _LOG.info("포지션이 이미 정리되었거나 없습니다. 추가 작업 없이 종료합니다.")
+    click.echo("\n전략 실행 루프가 정상적으로 종료되었습니다.")
 
+def determine_trade_direction(gate_client: GateIOClient, symbol: str, timeframe: str = '1h', short_window: int = 20, long_window: int = 50) -> Optional[Literal["long", "short"]]:
+    """
+    이동평균선 교차를 기반으로 최적의 거래 방향을 결정합니다.
+    """
+    click.secho(f"\n🔍 {timeframe} 봉 기준, {symbol}의 추세를 분석하여 최적 포지션을 결정합니다...", fg="cyan")
+    _LOG.info(f"거래 방향 결정을 위해 {symbol}의 {timeframe} 캔들 데이터 조회 시작.")
+    
+    try:
+        candlesticks = gate_client.futures_api.list_futures_candlesticks(
+            settle='usdt', contract=symbol, interval=timeframe, limit=long_window + 5)
+        if not candlesticks or len(candlesticks) < long_window:
+            _LOG.error(f"방향 결정을 위한 캔들 데이터가 충분하지 않습니다 (필요: {long_window}, 확보: {len(candlesticks)}).")
+            return None
+
+        df = pd.DataFrame([c.to_dict() for c in candlesticks], columns=['t', 'v', 'c', 'h', 'l', 'o'])
+        df['t'] = pd.to_datetime(df['t'], unit='s')
+        df.rename(columns={'t': 'timestamp', 'v': 'volume', 'c': 'close', 'h': 'high', 'l': 'low', 'o': 'open'}, inplace=True)
+        for col in ['open', 'high', 'low', 'close', 'volume']:
+            df[col] = pd.to_numeric(df[col])
+        
+        df.set_index('timestamp', inplace=True)
+        df.sort_index(inplace=True)
+
+        df['sma_short'] = df['close'].rolling(window=short_window).mean()
+        df['sma_long'] = df['close'].rolling(window=long_window).mean()
+
+        last_short_sma = df['sma_short'].iloc[-1]
+        last_long_sma = df['sma_long'].iloc[-1]
+
+        if last_short_sma > last_long_sma:
+            click.secho(f"📈 상승 추세 감지. 'LONG' 포지션을 추천합니다.", fg="green")
+            return "long"
+        else:
+            click.secho(f"📉 하락 추세 감지. 'SHORT' 포지션을 추천합니다.", fg="red")
+            return "short"
+
+    except Exception as e:
+        _LOG.error(f"거래 방향 결정 중 예상치 못한 오류 발생: {e}", exc_info=True)
+        return None
+    
 def handle_emergency_stop(gate_client: GateIOClient, stop_event: threading.Event):
     """모든 포지션을 조회하고 청산한 후, 종료 신호를 보냅니다."""
     click.secho("\n🚨 긴급 정지 명령 수신! 모든 포지션을 정리합니다...", fg="red", bold=True)
@@ -473,7 +656,72 @@ def select_config(config_dir: Path) -> Optional[BotConfig | str]:
     show_default=True,
     help="--smoke-test 모드에서 사용할 선물 계약 심볼."
 )
-def main(config_file: Optional[Path], smoke_test: bool, contract: str) -> None:
+
+def pretty_show_summary(config: BotConfig, current_bot_state: BotTradingState, actual_position: Optional[Dict[str, Any]]):
+    """
+    (개선된 UI) 실시간 봇 상태를 박스 레이아웃과 색상을 활용하여 예쁘게 출력합니다.
+    """
+    click.echo() # 위아래 간격을 위한 빈 줄
+    
+    # 포지션이 없는 경우
+    position_size_raw = actual_position.get('size') if actual_position else None
+    if position_size_raw is None or float(position_size_raw) == 0:
+        click.secho(" " * 2 + "╭" + "─" * 45 + "╮", fg="cyan")
+        click.secho(f" │ 💤 {config.symbol:<15} 현재 포지션 없음 │", fg="cyan")
+        click.secho(" " * 2 + "╰" + "─" * 45 + "╯", fg="cyan")
+        if current_bot_state.is_in_position:
+            click.secho(f"   ⚠️ (경고: 봇 내부에는 포지션이 기록되어 있습니다)", fg="yellow")
+        return
+
+    # --- 포지션이 있는 경우 ---
+    try:
+        pos_size = float(position_size_raw)
+        entry_price = float(actual_position.get('entry_price', 0))
+        margin_used = float(actual_position.get('margin', 0))
+        leverage = float(actual_position.get('leverage', 1))
+        unrealised_pnl = float(actual_position.get('unrealised_pnl', 0))
+        roe_pct = (unrealised_pnl / margin_used) * 100 if margin_used > 1e-9 else 0.0
+        pnl_color = "green" if unrealised_pnl >= 0 else "red"
+        direction_str, direction_color, direction_icon = ("LONG", "green", "📈") if pos_size > 0 else ("SHORT", "red", "📉")
+    except (ValueError, TypeError) as e:
+        _LOG.error(f"API 포지션 데이터 파싱 오류: {e}", exc_info=True)
+        click.secho("❌ API 응답 데이터 처리 중 오류가 발생했습니다.", fg="red")
+        return
+        
+    # 박스 상단
+    click.secho(" ╭" + "─" * 25 + "┬" + "─" * 27 + "╮")
+    title = f" {direction_icon} {config.symbol} | {direction_str} "
+    click.secho(f" │{title:^25}│ {'현재 손익 (ROE)':^27} │", fg=direction_color, bold=True)
+    click.secho(" ├" + "─" * 25 + "┼" + "─" * 27 + "┤")
+    
+    # 손익 정보
+    pnl_str = f"{unrealised_pnl:,.2f} USDT"
+    roe_str = f"{roe_pct:.2f}%"
+    click.secho(f" │ {'P L':<10}  {pnl_str:>12} │ {roe_str:^27} │", fg=pnl_color)
+    click.secho(" ├" + "─" * 25 + "┴" + "─" * 27 + "┤")
+
+    # 상세 정보
+    click.echo(f" │ {'평균 진입가':<12} {f'{entry_price:,.2f}':>11} │")
+    click.echo(f" │ {'포지션 크기':<12} {f'{pos_size}':>11} │")
+    click.echo(f" │ {'레버리지':<12} {f'{leverage:.0f}x':>11} │")
+    click.secho(" ├" + "─" * 53 + "┤")
+
+    # 목표가 정보
+    click.secho(" │ 🎯 봇 로직 목표 (실제 진입가 기준)" + " " * 20 + "│")
+    if config.take_profit_pct and leverage > 0:
+        market_move_pct = config.take_profit_pct / leverage
+        tp_target_price = entry_price * (1 + (market_move_pct / 100.0) * (1 if pos_size > 0 else -1))
+        click.secho(f" │   익절가 (ROE {config.take_profit_pct}%) : {tp_target_price:,.2f} USDT", fg="green")
+
+    if config.enable_stop_loss and config.stop_loss_pct and leverage > 0:
+        market_move_pct = config.stop_loss_pct / leverage
+        sl_target_price = entry_price * (1 - (market_move_pct / 100.0) * (1 if pos_size > 0 else -1))
+        click.secho(f" │   손절가 (ROE -{config.stop_loss_pct}%) : {sl_target_price:,.2f} USDT", fg="red")
+
+    # 박스 하단
+    click.secho(" ╰" + "─" * 53 + "╯")
+
+def main(config_file: Optional[Path] = None, smoke_test: bool = False, contract: str = "BTC_USDT") -> None:
     _LOG.info("="*10 + " 자동매매 봇 CLI 시작 " + "="*10)
     gate_client: GateIOClient
     try:
@@ -505,7 +753,8 @@ def main(config_file: Optional[Path], smoke_test: bool, contract: str) -> None:
                 _LOG.info("사용자가 메뉴에서 종료를 선택했습니다.")
                 sys.exit(0)
             elif user_choice == "new":
-                bot_configuration = prompt_config()
+                # ✅ gate_client 인자 추가
+                bot_configuration = prompt_config(gate_client)
                 if bot_configuration is None:
                     if not click.confirm("\n설정 중 오류가 발생했습니다. 다시 시도하시겠습니까?", default=True):
                         _LOG.info("사용자가 설정 재시도를 원치 않아 종료합니다.")
@@ -514,13 +763,23 @@ def main(config_file: Optional[Path], smoke_test: bool, contract: str) -> None:
                 bot_configuration = user_choice
                 click.secho(f"\n✅ '{user_choice.symbol}' 설정 로드 완료.", fg="green")
 
-    # 2. 설정 값 보정 (분할매수 트리거는 항상 음수여야 함)
-    # 사용자가 양수를 입력했더라도, 손실 방향으로 진입해야 하므로 음수로 변환합니다.
+    # 2. (조건부) 자동 방향 결정
+    # ✅ auto_determine_direction 플래그가 True일 때만 방향을 새로 결정합니다.
+    if bot_configuration.auto_determine_direction:
+        click.secho("\n🤖 자동 방향 결정 기능 활성화됨. 추세를 분석합니다...", fg="cyan")
+        determined_direction = determine_trade_direction(gate_client, bot_configuration.symbol)
+        if not determined_direction:
+            click.secho("❌ 추세 분석 실패. 거래 방향을 결정할 수 없습니다. 프로그램을 종료합니다.", fg="red", bold=True)
+            sys.exit(1)
+        # 결정된 방향으로 설정 업데이트
+        bot_configuration.direction = determined_direction
+
+    # 3. 설정 값 보정 (분할매수 트리거는 항상 음수여야 함)
     bot_configuration.split_trigger_percents = [
         abs(p) * -1 for p in bot_configuration.split_trigger_percents
     ]
     
-    # 3. 최종 설정으로 실행
+    # 4. 최종 설정으로 실행
     show_summary_final(bot_configuration)
 
     if click.confirm("\n❓ 이 설정을 파일로 저장하시겠습니까?", default=False):
@@ -565,14 +824,14 @@ def main(config_file: Optional[Path], smoke_test: bool, contract: str) -> None:
                     handle_emergency_stop(gate_client, stop_event)
                     break 
                 else:
-                    click.echo(" 	(종료하시려면 'stop'을 입력해주세요...)")
+                    click.echo("    (종료하시려면 'stop'을 입력해주세요...)")
 
         except KeyboardInterrupt:
             click.echo("\n🛑 Ctrl+C 감지. 봇 종료 신호를 보냅니다...")
             _LOG.warning("메인 스레드에서 Ctrl+C 감지. 전략 스레드에 종료 신호 전송.")
             handle_emergency_stop(gate_client, stop_event)
 
-        click.echo(" 	-> 포지션 정리 및 종료를 기다리는 중...")
+        click.echo("    -> 포지션 정리 및 종료를 기다리는 중...")
         strategy_thread.join(timeout=30)
         
         if strategy_thread.is_alive():

@@ -45,41 +45,59 @@ def setup_logging():
     LOG_DIR = ROOT_DIR / "logs"
     LOG_DIR.mkdir(exist_ok=True)
     LOG_FILE = LOG_DIR / "trading_bot.log"
+    ERROR_LOG_FILE = LOG_DIR / "trading_bot_errors.log" # ✅ 오류 로그 파일 경로 정의
 
-    # .env 또는 시스템 환경 변수에서 로그 레벨 가져오기 (기본값: INFO)
     log_level_str = os.getenv("LOG_LEVEL", "INFO").upper()
     log_level = getattr(logging, log_level_str, logging.INFO)
 
-    # 문자열 변환 실패 시(잘못된 값 입력 시) 기본값으로 INFO 사용
     if not isinstance(log_level, int):
         print(f"WARNING: 잘못된 LOG_LEVEL '{log_level_str}'. 기본값 INFO를 사용합니다.", file=sys.stderr)
         log_level = logging.INFO
+    
+    # ✅ 기본 포매터 정의
+    log_formatter = logging.Formatter(
+        '%(asctime)s - %(name)-25s - %(levelname)-8s - %(filename)s:%(lineno)d - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
 
+    # ✅ 오류만 기록하는 핸들러 생성
+    error_handler = RotatingFileHandler(
+        ERROR_LOG_FILE,
+        maxBytes=5 * 1024 * 1024, # 5 MB
+        backupCount=3,
+        encoding='utf-8'
+    )
+    error_handler.setLevel(logging.ERROR) # ERROR 레벨 이상만 처리
+    error_handler.setFormatter(log_formatter)
+
+    # ✅ 모든 내용을 기록하는 핸들러 생성
+    full_handler = RotatingFileHandler(
+        LOG_FILE,
+        maxBytes=5 * 1024 * 1024,
+        backupCount=5,
+        encoding='utf-8'
+    )
+    full_handler.setFormatter(log_formatter)
+    
     # 로깅 기본 설정
     logging.basicConfig(
         level=log_level,
-        format='%(asctime)s - %(name)-25s - %(levelname)-8s - %(filename)s:%(lineno)d - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
         handlers=[
-            logging.StreamHandler(sys.stdout),
-            # 로그 파일이 5MB를 초과하면 새 파일로 교체 (최대 5개 보관)
-            RotatingFileHandler(
-                LOG_FILE,
-                maxBytes=5 * 1024 * 1024,  # 5 MB
-                backupCount=5,
-                encoding='utf-8'
-            )
+            logging.StreamHandler(sys.stdout), # 콘솔 출력
+            full_handler,                      # 전체 내용 파일로 출력
+            error_handler                      # 오류 내용만 별도 파일로 출력
         ]
     )
 
-    # 외부 라이브러리(gate_api 등)의 로그가 너무 많이 찍히는 것을 방지
+    # 외부 라이브러리 로그 레벨 조정
     logging.getLogger("gate_api").setLevel(logging.WARNING)
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
     
-    # 이제 로거를 안전하게 사용할 수 있음
     logger = logging.getLogger(__name__)
-    logger.info(f"로깅 시스템 초기화 완료. 로그 레벨: {log_level_str}. 로그 파일: {LOG_FILE.resolve()}")
+    logger.info(f"로깅 시스템 초기화 완료. 로그 레벨: {log_level_str}.")
+    logger.info(f"전체 로그 파일: {LOG_FILE.resolve()}")
+    logger.info(f"오류 로그 파일: {ERROR_LOG_FILE.resolve()}")
     return logger
 
 # ──────────────────────────────────────────────────────────────────────────
