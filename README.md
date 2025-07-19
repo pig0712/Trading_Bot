@@ -16,26 +16,33 @@
 이 프로젝트는 다음과 같은 파일 및 디렉토리 구조를 가지고 있습니다.
 
 .<br>
-├── .gitignore                 # 🚫 Git 버전 관리에서 제외할 파일 목록 <br>
-├── Trading_BOT/               # ▶️ 실제 봇 프로젝트의 메인 디렉토리 <br>
-│   ├── .env                   # 🔑 (사용자 생성) API 키 등 민감 정보 저장<br>
-│   ├── Bot/                   # 💾 저장된 매매 전략 설정 파일 (.json)<br>
-│   ├── logs/                  # 📜 로그 파일 저장 디렉토리<br>
+├── Bot/<br>
+├── README.md<br>
+├── Trading_BOT/<br>
+│   ├── .env                       # 🔑 (추정) API 키 등 민감 정보 저장<br>
+│   ├── Bot/                     # 💾 저장된 매매 전략 설정 파일 (.json)<br>
+│   │   ├── auto_postion_10x.json<br>
+│   │   ├── long_postion_10x.json<br>
+│   │   └── short_postion_10x.json<br>
+│   ├── README.md                # 📖 프로젝트 설명서<br>
+│   ├── aws-trading-bot.pem      # ⚠️ (보안 주의!) AWS 서버 접속 개인 키<br>
+│   ├── logs/                    # 📜 로그 파일 저장 디렉토리<br>
 │   │   ├── trading_bot.log<br>
 │   │   └── trading_bot_errors.log<br>
-│   ├── main.py                # 🚀 봇 애플리케이션의 메인 진입점<br>
-│   ├── pyproject.toml         # 🧱 프로젝트 설정 및 의존성 관리 (uv, poetry 등)<br>
-│   ├── uv.lock                # 🔒 의존성 버전 고정 파일<br>
-│   └── src/<br>
-│       └── trading_bot/<br>
-│           ├── init.py<br>
-│           ├── cli.py         # 💻 CLI 및 메인 전략 실행 로직<br>
-│           ├── config.py      # ⚙️ 봇 설정 관리 (BotConfig)<br>
-│           ├── exchange_gateio.py # 🔗 Gate.io API 통신 클라이언트<br>
-│           ├── liquidation.py # 💧 예상 청산가 계산<br>
-│           └── prices.py      # 💹 외부 가격 조회 (보조 기능)<br>
-└── ...<br>
-
+│   ├── main.py                  # 🚀 봇 애플리케이션의 메인 진입점<br>
+│   ├── pyproject.toml           # 🧱 프로젝트 설정 및 의존성 관리<br>
+│   ├── src/                     # 📂 소스 코드 디렉토리<br>
+│   │   └── trading_bot/         # 🐍 'trading_bot' 파이썬 패키지<br>
+│   │       ├── __init__.py<br>
+│   │       ├── cli.py           #   - 💻 CLI 및 메인 전략 실행 로직<br>
+│   │       ├── config.py        #   - ⚙️ 봇 설정 관리<br>
+│   │       ├── exchange_gateio.py #   - 🔗 Gate.io API 통신 클라이언트<br>
+│   │       ├── liquidation.py   #   - 💧 예상 청산가 계산<br>
+│   │       └── prices.py        #   - 💹 외부 가격 조회<br>
+│   ├── test.py                  # 🧪 간단한 테스트 스크립트<br>
+│   ├── tests/                   # 🧪 (비어있음) 테스트 코드 디렉토리<br>
+│   └── uv.lock                  # 🔒 의존성 버전 고정 파일<br>
+<br>
 
 ---
 
