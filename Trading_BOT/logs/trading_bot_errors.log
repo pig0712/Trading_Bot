@@ -142,3 +142,940 @@ Traceback (most recent call last):
 TypeError: '<' not supported between instances of 'int' and 'str'
 2025-07-18 14:50:18 - trading_bot.cli           - ERROR    - cli.py:414 - ENTRY 주문 실패 또는 API로부터 유효한 응답 받지 못함.
 2025-07-18 14:50:18 - trading_bot.cli           - CRITICAL - cli.py:423 - 초기 진입 주문 실패.
+2025-07-19 06:26:44 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:92 - ❌ 레버리지 설정 후 상태 확인 실패. API 키 권한 또는 양방향 모드 설정을 확인하세요. 주문 중단.
+2025-07-19 06:26:44 - trading_bot.cli           - ERROR    - cli.py:414 - ENTRY 주문 실패 또는 API로부터 유효한 응답 받지 못함.
+2025-07-19 06:26:44 - trading_bot.cli           - CRITICAL - cli.py:423 - 초기 진입 주문 실패.
+2025-07-19 06:47:17 - trading_bot.exchange_gateio - ERROR    - exchange_gateio.py:92 - ❌ 레버리지 설정 후 상태 확인 실패. API 키 권한 또는 양방향 모드 설정을 확인하세요. 주문 중단.
+2025-07-19 06:47:17 - trading_bot.cli           - ERROR    - cli.py:414 - ENTRY 주문 실패 또는 API로부터 유효한 응답 받지 못함.
+2025-07-19 06:47:17 - trading_bot.cli           - CRITICAL - cli.py:423 - 초기 진입 주문 실패.
+2025-07-19 07:18:00 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'list' object has no attribute 'long'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 429, in run_strategy
+    actual_position = gate_client.get_position(config.symbol)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 200, in get_position
+    if dual_position and (dual_position.long.size != 0 or dual_position.short.size != 0):
+                          ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'long'
+2025-07-19 07:18:10 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'list' object has no attribute 'long'
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 429, in run_strategy
+    actual_position = gate_client.get_position(config.symbol)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/exchange_gateio.py", line 200, in get_position
+    if dual_position and (dual_position.long.size != 0 or dual_position.short.size != 0):
+                          ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'long'
+2025-07-19 07:20:58 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:08 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:18 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:28 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:38 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:48 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:21:59 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:22:09 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:22:19 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:22:29 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:22:39 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:22:49 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:00 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:10 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:20 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:30 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:40 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:23:50 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:00 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:11 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:21 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:31 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:41 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:24:51 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:01 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:11 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:22 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:32 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:42 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:25:52 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:02 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:12 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:23 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:33 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:43 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:26:53 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:03 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:13 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:23 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:34 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:44 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:27:54 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:04 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:14 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:24 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:34 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:45 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:28:55 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:05 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:15 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:25 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:35 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:45 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:29:56 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:30:06 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:30:16 - trading_bot.cli           - ERROR    - cli.py:535 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:30:48 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:30:58 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:08 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:18 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:28 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:39 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:49 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:31:59 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:32:09 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:32:19 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:32:29 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:32:40 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:32:50 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:00 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:10 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:20 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:30 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:40 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:33:51 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:01 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:11 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:21 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:31 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:41 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:34:52 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:35:02 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
+2025-07-19 07:35:12 - trading_bot.cli           - ERROR    - cli.py:534 - 전략 실행 중 예상치 못한 오류: 'BotConfig' object is not iterable
+Traceback (most recent call last):
+  File "/workspaces/Trading_Bot/Trading_BOT/src/trading_bot/cli.py", line 430, in run_strategy
+    pretty_show_summary(config, current_bot_state, actual_position)
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1442, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/Trading_Bot/Trading_BOT/.venv/lib/python3.12/site-packages/click/core.py", line 1352, in main
+    args = list(args)
+           ^^^^^^^^^^
+TypeError: 'BotConfig' object is not iterable
