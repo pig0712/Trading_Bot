@@ -713,8 +713,6 @@ def pretty_show_summary(config: BotConfig, current_bot_state: BotTradingState, a
     show_default=True,
     help="--smoke-test 모드에서 사용할 선물 계약 심볼."
 )
-
-
 def main(config_file: Optional[Path] = None, smoke_test: bool = False, contract: str = "BTC_USDT") -> None:
     _LOG.info("="*10 + " 자동매매 봇 CLI 시작 " + "="*10)
     gate_client: GateIOClient
@@ -747,7 +745,6 @@ def main(config_file: Optional[Path] = None, smoke_test: bool = False, contract:
                 _LOG.info("사용자가 메뉴에서 종료를 선택했습니다.")
                 sys.exit(0)
             elif user_choice == "new":
-                # ✅ gate_client 인자 추가
                 bot_configuration = prompt_config(gate_client)
                 if bot_configuration is None:
                     if not click.confirm("\n설정 중 오류가 발생했습니다. 다시 시도하시겠습니까?", default=True):
@@ -757,18 +754,22 @@ def main(config_file: Optional[Path] = None, smoke_test: bool = False, contract:
                 bot_configuration = user_choice
                 click.secho(f"\n✅ '{user_choice.symbol}' 설정 로드 완료.", fg="green")
 
-    # 2. (조건부) 자동 방향 결정
-    # ✅ auto_determine_direction 플래그가 True일 때만 방향을 새로 결정합니다.
+    # 2. (조건부) 자동 방향 결정 및 무한 재시도 로직
     if bot_configuration.auto_determine_direction:
         click.secho("\n🤖 자동 방향 결정 기능 활성화됨. 추세를 분석합니다...", fg="cyan")
-        determined_direction = determine_trade_direction(gate_client, bot_configuration.symbol)
-        if not determined_direction:
-            click.secho("❌ 추세 분석 실패. 거래 방향을 결정할 수 없습니다. 프로그램을 종료합니다.", fg="red", bold=True)
-            sys.exit(1)
-        # 결정된 방향으로 설정 업데이트
-        bot_configuration.direction = determined_direction
+        
+        retry_delay_seconds = 10  # 60초(1분) 대기
 
-    # 3. 설정 값 보정 (분할매수 트리거는 항상 음수여야 함)
+        while True: # ✅ 방향이 결정될 때까지 무한 반복
+            determined_direction = determine_trade_direction(gate_client, bot_configuration.symbol)
+            if determined_direction:
+                bot_configuration.direction = determined_direction
+                break  # 방향 결정 성공 시 루프 탈출
+            
+            click.secho(f"   -> 추세 불확실. {retry_delay_seconds}초 후 다시 분석합니다...", fg="yellow")
+            time.sleep(retry_delay_seconds)
+
+    # 3. 설정 값 보정
     bot_configuration.split_trigger_percents = [
         abs(p) * -1 for p in bot_configuration.split_trigger_percents
     ]
