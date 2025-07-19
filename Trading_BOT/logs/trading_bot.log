@@ -12832,3 +12832,195 @@ TypeError: 'BotConfig' object is not iterable
 2025-07-19 09:46:19 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:382 - 'BTC_USDT' 청산 주문 성공적으로 접수됨. 주문 ID: 36028803331542432
 2025-07-19 09:46:19 - trading_bot.cli           - INFO     - cli.py:515 - 'BTC_USDT' 전략 루프 종료.
 2025-07-19 09:46:19 - trading_bot.cli           - INFO     - cli.py:840 - ========== 자동매매 봇 CLI 종료 ==========
+2025-07-19 13:58:16 - __main__                  - INFO     - main.py:98 - 로깅 시스템 초기화 완료. 로그 레벨: INFO.
+2025-07-19 13:58:16 - __main__                  - INFO     - main.py:99 - 전체 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-19 13:58:16 - __main__                  - INFO     - main.py:100 - 오류 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot_errors.log
+2025-07-19 13:58:16 - __main__                  - INFO     - main.py:130 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-19 13:58:34 - __main__                  - INFO     - main.py:112 - CLI 애플리케이션 시작...
+2025-07-19 13:58:34 - trading_bot.cli           - INFO     - cli.py:719 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-19 13:58:34 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-19 13:58:35 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:160 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '45.296225496792',
+ 'bonus': '0',
+ 'cross_available': '45.296225496792',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '45.296225496792',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': False,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-29.378971342',
+             'fund': '-0.292485113708',
+             'pnl': '-6.17068',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': False,
+ 'isolated_position_margin': '17.8616380475',
+ 'maintenance_margin': '0.8413577625',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '63.157863544292',
+ 'unrealised_pnl': '-0.15878'}
+2025-07-19 13:58:35 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:176 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=45.296225496792 USDT, 총잔액=63.157863544292 USDT
+2025-07-19 13:58:35 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-19 13:58:55 - trading_bot.config        - INFO     - config.py:141 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/auto_postion_10x.json
+2025-07-19 13:58:55 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 13:58:55 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118259.38, 장기 SMA=118191.28, RSI=42.39
+2025-07-19 14:07:36 - __main__                  - INFO     - main.py:98 - 로깅 시스템 초기화 완료. 로그 레벨: INFO.
+2025-07-19 14:07:36 - __main__                  - INFO     - main.py:99 - 전체 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-19 14:07:36 - __main__                  - INFO     - main.py:100 - 오류 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot_errors.log
+2025-07-19 14:07:36 - __main__                  - INFO     - main.py:130 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-19 14:07:36 - __main__                  - INFO     - main.py:112 - CLI 애플리케이션 시작...
+2025-07-19 14:07:36 - trading_bot.cli           - INFO     - cli.py:717 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-19 14:07:36 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-19 14:07:36 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:160 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '62.978735444292',
+ 'bonus': '0',
+ 'cross_available': '62.978735444292',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '62.978735444292',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': False,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-29.467569442',
+             'fund': '-0.292485113708',
+             'pnl': '-6.26121',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': False,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '62.978735444292',
+ 'unrealised_pnl': '0'}
+2025-07-19 14:07:36 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:176 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=62.978735444292 USDT, 총잔액=62.978735444292 USDT
+2025-07-19 14:07:36 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-19 14:07:38 - trading_bot.config        - INFO     - config.py:141 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/auto_postion_10x.json
+2025-07-19 14:07:38 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:07:38 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118262.29, 장기 SMA=118194.10, RSI=34.36
+2025-07-19 14:07:51 - __main__                  - INFO     - main.py:98 - 로깅 시스템 초기화 완료. 로그 레벨: INFO.
+2025-07-19 14:07:51 - __main__                  - INFO     - main.py:99 - 전체 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-19 14:07:51 - __main__                  - INFO     - main.py:100 - 오류 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot_errors.log
+2025-07-19 14:07:51 - __main__                  - INFO     - main.py:130 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-19 14:07:51 - __main__                  - INFO     - main.py:112 - CLI 애플리케이션 시작...
+2025-07-19 14:07:51 - trading_bot.cli           - INFO     - cli.py:717 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-19 14:07:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-19 14:07:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:160 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '62.978735444292',
+ 'bonus': '0',
+ 'cross_available': '62.978735444292',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '62.978735444292',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': False,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-29.467569442',
+             'fund': '-0.292485113708',
+             'pnl': '-6.26121',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': False,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '62.978735444292',
+ 'unrealised_pnl': '0'}
+2025-07-19 14:07:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:176 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=62.978735444292 USDT, 총잔액=62.978735444292 USDT
+2025-07-19 14:07:51 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-19 14:07:53 - trading_bot.config        - INFO     - config.py:141 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/auto_postion_10x.json
+2025-07-19 14:07:53 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:07:53 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118262.89, 장기 SMA=118194.34, RSI=34.79
+2025-07-19 14:08:21 - __main__                  - INFO     - main.py:98 - 로깅 시스템 초기화 완료. 로그 레벨: INFO.
+2025-07-19 14:08:21 - __main__                  - INFO     - main.py:99 - 전체 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot.log
+2025-07-19 14:08:21 - __main__                  - INFO     - main.py:100 - 오류 로그 파일: /workspaces/Trading_Bot/Trading_BOT/logs/trading_bot_errors.log
+2025-07-19 14:08:21 - __main__                  - INFO     - main.py:130 - Trading_BOT 스크립트 실행 시작. CWD: /workspaces/Trading_Bot
+2025-07-19 14:08:21 - __main__                  - INFO     - main.py:112 - CLI 애플리케이션 시작...
+2025-07-19 14:08:21 - trading_bot.cli           - INFO     - cli.py:717 - ========== 자동매매 봇 CLI 시작 ==========
+2025-07-19 14:08:21 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:36 - GateIOClient 초기화 완료. 정산 통화: 'usdt', 환경: 'live', API 호스트: 'https://api.gateio.ws/api/v4'
+2025-07-19 14:08:22 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:160 - DEBUG: list_futures_accounts API 응답 수신. 타입: <class 'gate_api.models.futures_account.FuturesAccount'>, 값: {'available': '62.978735444292',
+ 'bonus': '0',
+ 'cross_available': '62.978735444292',
+ 'cross_imr': '0',
+ 'cross_initial_margin': '0',
+ 'cross_maintenance_margin': '0',
+ 'cross_margin_balance': '62.978735444292',
+ 'cross_mmr': '0',
+ 'cross_order_margin': '0',
+ 'cross_unrealised_pnl': '0',
+ 'currency': 'USDT',
+ 'enable_credit': False,
+ 'enable_evolved_classic': True,
+ 'enable_new_dual_mode': False,
+ 'history': {'bonus_dnw': '0',
+             'bonus_offset': '0',
+             'dnw': '99',
+             'fee': '-29.467569442',
+             'fund': '-0.292485113708',
+             'pnl': '-6.26121',
+             'point_dnw': '0',
+             'point_fee': '0',
+             'point_refr': '0',
+             'refr': '0'},
+ 'in_dual_mode': False,
+ 'isolated_position_margin': '0',
+ 'maintenance_margin': '0',
+ 'margin_mode': 0,
+ 'order_margin': '0',
+ 'point': '0',
+ 'position_initial_margin': '0',
+ 'position_margin': '0',
+ 'total': '62.978735444292',
+ 'unrealised_pnl': '0'}
+2025-07-19 14:08:22 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:176 - 계좌 정보 (usdt): Currency=USDT, 사용가능잔액=62.978735444292 USDT, 총잔액=62.978735444292 USDT
+2025-07-19 14:08:22 - trading_bot.exchange_gateio - INFO     - exchange_gateio.py:44 - Successfully connected to Gate.io API and authenticated. Currency: USDT
+2025-07-19 14:08:23 - trading_bot.config        - INFO     - config.py:141 - 설정을 성공적으로 불러왔습니다: /workspaces/Trading_Bot/Trading_BOT/Bot/auto_postion_10x.json
+2025-07-19 14:08:23 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:08:23 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118263.34, 장기 SMA=118194.52, RSI=35.11
+2025-07-19 14:08:33 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:08:33 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118262.61, 장기 SMA=118194.23, RSI=34.58
+2025-07-19 14:08:43 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:08:43 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118263.31, 장기 SMA=118194.51, RSI=35.09
+2025-07-19 14:08:53 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:08:53 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118263.78, 장기 SMA=118194.70, RSI=35.44
+2025-07-19 14:09:03 - trading_bot.cli           - INFO     - cli.py:524 - 거래 방향 결정을 위해 BTC_USDT의 15m 캔들 데이터 조회 시작.
+2025-07-19 14:09:03 - trading_bot.cli           - INFO     - cli.py:559 - 최신 지표 분석: 단기 SMA=118262.40, 장기 SMA=118194.15, RSI=34.43
