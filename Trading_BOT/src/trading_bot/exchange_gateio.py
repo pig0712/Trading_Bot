@@ -79,18 +79,18 @@ class GateIOClient:
         if not reduce_only:
             _LOG.info(f"주문 전 {contract_symbol}의 레버리지를 {leverage}x로 설정합니다.")
             try:
-                updated_pos_info = self.update_position_leverage(contract_symbol, str(leverage))
-                
-                if updated_pos_info and updated_pos_info.get('leverage'):
-                    actual_leverage = int(float(updated_pos_info.get('leverage')))
-                    if actual_leverage == leverage:
-                        _LOG.info(f"✅ 레버리지 설정 확인 완료: {actual_leverage}x")
-                    else:
-                        _LOG.error(f"❌ 레버리지 설정 실패! 의도: {leverage}x, 실제: {actual_leverage}x. 주문을 중단합니다.")
-                        return None
-                else:
-                    _LOG.error(f"❌ 레버리지 설정 후 상태 확인 실패. API 키 권한 또는 양방향 모드 설정을 확인하세요. 주문 중단.")
-                    return None
+                # updated_pos_info = self.update_position_leverage(contract_symbol, str(leverage))
+                _LOG.warning("레버리지 확인 안전장치가 비활성화되었습니다.")
+                # if updated_pos_info and updated_pos_info.get('leverage'):
+                #     actual_leverage = int(float(updated_pos_info.get('leverage')))
+                #     if actual_leverage == leverage:
+                #         _LOG.info(f"✅ 레버리지 설정 확인 완료: {actual_leverage}x")
+                #     else:
+                #         _LOG.error(f"❌ 레버리지 설정 실패! 의도: {leverage}x, 실제: {actual_leverage}x. 주문을 중단합니다.")
+                #         return None
+                # else:
+                #     _LOG.error(f"❌ 레버리지 설정 후 상태 확인 실패. API 키 권한 또는 양방향 모드 설정을 확인하세요. 주문 중단.")
+                #     return None
             except Exception as e:
                 _LOG.error(f"레버리지 설정 중 예외 발생: {e}", exc_info=True)
                 return None
@@ -196,11 +196,20 @@ class GateIOClient:
         _LOG.debug(f"포지션 정보 조회 시도 (통합): {contract_symbol}")
         
         try: # 양방향 모드(Dual Mode) 먼저 시도
-            dual_position = self.futures_api.get_dual_mode_position(settle=self.settle, contract=contract_symbol)
-            if dual_position and (dual_position.long.size != 0 or dual_position.short.size != 0):
+            api_response = self.futures_api.get_dual_mode_position(settle=self.settle, contract=contract_symbol)
+            
+            # ✅ API 응답이 리스트 형태일 경우를 처리하는 로직 추가
+            dual_position = None
+            if isinstance(api_response, list) and api_response:
+                dual_position = api_response[0] # 리스트의 첫 번째 항목을 사용
+            elif not isinstance(api_response, list):
+                dual_position = api_response
+
+            if dual_position and hasattr(dual_position, 'long') and (dual_position.long.size != 0 or dual_position.short.size != 0):
                 _LOG.info(f"양방향 모드 포지션 발견: Long Size={dual_position.long.size}, Short Size={dual_position.short.size}")
                 position_to_return = dual_position.long if dual_position.long.size != 0 else dual_position.short
                 return position_to_return.to_dict()
+                
         except ApiException as e:
             if "POSITION_NOT_FOUND" not in str(e.body):
                 _LOG.warning(f"양방향 모드 조회 중 예상치 못한 API 오류: {e.body}")

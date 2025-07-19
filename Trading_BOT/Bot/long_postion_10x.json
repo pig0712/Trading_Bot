@@ -30,7 +30,7 @@
   "enable_stop_loss": true,
   "check_interval_seconds": 10,
   "order_id_prefix": "t-tradingbot-",
-  "auto_determine_direction": true,
+  "auto_determine_direction": false,
   "enable_pyramiding": true,
   "pyramiding_max_count": 3,
   "pyramiding_trigger_percents": [
