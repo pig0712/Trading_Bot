@@ -514,62 +514,90 @@ def run_strategy(config: BotConfig, gate_client: GateIOClient, current_bot_state
     
     _LOG.info(f"'{config.symbol}' 전략 루프 종료.")
 
-def determine_trade_direction(gate_client: GateIOClient, symbol: str, timeframe: str = '15m', short_window: int = 20, long_window: int = 50, rsi_period: int = 14) -> Optional[Literal["long", "short"]]:
+def determine_trade_direction(
+    gate_client: GateIOClient, 
+    symbol: str, 
+    major_timeframe: str = '1h', 
+    trade_timeframe: str = '15m',
+    short_window: int = 20, 
+    long_window: int = 50, 
+    rsi_period: int = 14
+) -> Optional[Literal["long", "short"]]:
     """
-    (개선) 이동평균선 교차와 RSI 지표를 결합하여 더 정밀하게 거래 방향을 결정합니다.
-    - SMA 골든 크로스 + RSI > 50  -> 'long'
-    - SMA 데드 크로스 + RSI < 50  -> 'short'
+    (초정밀) 다중 타임프레임, SMA, RSI, MACD를 결합하여 거래 방향을 결정합니다.
     """
-    click.secho(f"\n🔍 {timeframe} 봉 기준, {symbol}의 추세를 정밀 분석합니다...", fg="cyan")
-    _LOG.info(f"거래 방향 결정을 위해 {symbol}의 {timeframe} 캔들 데이터 조회 시작.")
+    click.secho(f"\n🔍 {major_timeframe}/{trade_timeframe} 봉 기준, {symbol}의 추세를 정밀 분석합니다...", fg="cyan")
     
     try:
-        # 1. 데이터 가져오기 (기존과 동일)
-        candlesticks = gate_client.futures_api.list_futures_candlesticks(
-            settle='usdt', contract=symbol, interval=timeframe, limit=long_window + rsi_period
+        # --- 1. 장기 추세 필터 (Major Trend Filter - 1h) ---
+        _LOG.info(f"장기 추세 분석 ({major_timeframe})...")
+        candles_major = gate_client.futures_api.list_futures_candlesticks(
+            settle='usdt', contract=symbol, interval=major_timeframe, limit=long_window
         )
-        if not candlesticks or len(candlesticks) < long_window:
-            _LOG.error(f"방향 결정을 위한 캔들 데이터가 충분하지 않습니다.")
+        if not candles_major or len(candles_major) < long_window:
+            _LOG.error(f"장기 추세 분석을 위한 데이터가 충분하지 않습니다.")
+            return None
+        
+        df_major = pd.DataFrame([c.to_dict() for c in candles_major], columns=['t', 'c'])
+        df_major['c'] = pd.to_numeric(df_major['c'])
+        sma_long_major = df_major['c'].rolling(window=long_window).mean().iloc[-1]
+        last_price = float(candles_major[-1].c)
+
+        is_major_trend_up = last_price > sma_long_major
+        is_major_trend_down = last_price < sma_long_major
+        _LOG.info(f"장기 추세 판단: 현재가({last_price:.2f}) vs {major_timeframe} {long_window}SMA({sma_long_major:.2f}) -> {'상승' if is_major_trend_up else '하락'}")
+
+        # --- 2. 단기 진입 신호 분석 (Trade Signal - 15m) ---
+        _LOG.info(f"단기 진입 신호 분석 ({trade_timeframe})...")
+        candles_trade = gate_client.futures_api.list_futures_candlesticks(
+            settle='usdt', contract=symbol, interval=trade_timeframe, limit=long_window + rsi_period + 34 # MACD 계산을 위한 충분한 데이터
+        )
+        if not candles_trade or len(candles_trade) < long_window:
+            _LOG.error(f"단기 추세 분석을 위한 데이터가 충분하지 않습니다.")
             return None
 
-        df = pd.DataFrame([c.to_dict() for c in candlesticks], columns=['t', 'c'])
-        df['t'] = pd.to_datetime(df['t'], unit='s')
-        df.rename(columns={'t': 'timestamp', 'c': 'close'}, inplace=True)
-        df['close'] = pd.to_numeric(df['close'])
-        df.set_index('timestamp', inplace=True)
-        df.sort_index(inplace=True)
-
-        # 2. 이동평균선 계산 (기존과 동일)
-        df['sma_short'] = df['close'].rolling(window=short_window).mean()
-        df['sma_long'] = df['close'].rolling(window=long_window).mean()
-
-        # 3. ✅ RSI(상대강도지수) 계산 로직 추가
-        delta = df['close'].diff()
-        gain = (delta.where(delta > 0, 0)).rolling(window=rsi_period).mean()
-        loss = (-delta.where(delta < 0, 0)).rolling(window=rsi_period).mean()
-        rs = gain / loss
-        df['rsi'] = 100 - (100 / (1 + rs))
-
-        # 4. 최종 데이터 추출
-        last_row = df.iloc[-1]
-        last_short_sma = last_row['sma_short']
-        last_long_sma = last_row['sma_long']
-        last_rsi = last_row['rsi']
-
-        _LOG.info(f"최신 지표 분석: 단기 SMA={last_short_sma:.2f}, 장기 SMA={last_long_sma:.2f}, RSI={last_rsi:.2f}")
-
-        # 5. ✅ 결합된 규칙으로 방향 결정
-        is_golden_cross = last_short_sma > last_long_sma
-        is_dead_cross = last_short_sma < last_long_sma
+        df_trade = pd.DataFrame([c.to_dict() for c in candles_trade], columns=['t', 'c'])
+        df_trade['c'] = pd.to_numeric(df_trade['c'])
         
-        if is_golden_cross and last_rsi > 50:
-            click.secho(f"📈 강한 상승 추세 감지 (골든 크로스 & RSI > 50). 'LONG' 포지션을 추천합니다.", fg="green")
+        # SMA 계산
+        df_trade['sma_short'] = df_trade['c'].rolling(window=short_window).mean()
+        df_trade['sma_long'] = df_trade['c'].rolling(window=long_window).mean()
+
+        # RSI 계산
+        delta = df_trade['c'].diff()
+        gain = (delta.where(delta > 0, 0)).ewm(alpha=1/rsi_period, adjust=False).mean()
+        loss = (-delta.where(delta < 0, 0)).ewm(alpha=1/rsi_period, adjust=False).mean()
+        rs = gain / loss
+        df_trade['rsi'] = 100 - (100 / (1 + rs))
+
+        # MACD 계산
+        ema_12 = df_trade['c'].ewm(span=12, adjust=False).mean()
+        ema_26 = df_trade['c'].ewm(span=26, adjust=False).mean()
+        df_trade['macd'] = ema_12 - ema_26
+        df_trade['macd_signal'] = df_trade['macd'].ewm(span=9, adjust=False).mean()
+
+        # 최종 데이터 추출
+        last = df_trade.iloc[-1]
+        _LOG.info(f"단기 지표: 단기SMA={last['sma_short']:.2f}, 장기SMA={last['sma_long']:.2f}, RSI={last['rsi']:.2f}, MACD={last['macd']:.2f}, Signal={last['macd_signal']:.2f}")
+
+        # --- 3. 모든 조건 결합하여 최종 결정 ---
+        is_golden_cross = last['sma_short'] > last['sma_long']
+        is_dead_cross = last['sma_short'] < last['sma_long']
+        is_macd_bullish = last['macd'] > last['macd_signal']
+        is_macd_bearish = last['macd'] < last['macd_signal']
+
+        # 롱 포지션 진입 조건: (장기 추세 상승) AND (단기 골든크로스) AND (RSI > 50) AND (MACD 상승)
+        if is_major_trend_up and is_golden_cross and last['rsi'] > 50 and is_macd_bullish:
+            click.secho(f"📈 모든 조건 충족. 'LONG' 포지션을 추천합니다.", fg="green", bold=True)
             return "long"
-        elif is_dead_cross and last_rsi < 50:
-            click.secho(f"📉 강한 하락 추세 감지 (데드 크로스 & RSI < 50). 'SHORT' 포지션을 추천합니다.", fg="red")
+        
+        # 숏 포지션 진입 조건: (장기 추세 하락) AND (단기 데드크로스) AND (RSI < 50) AND (MACD 하락)
+        elif is_major_trend_down and is_dead_cross and last['rsi'] < 50 and is_macd_bearish:
+            click.secho(f"📉 모든 조건 충족. 'SHORT' 포지션을 추천합니다.", fg="red", bold=True)
             return "short"
+            
         else:
-            click.secho(f"횡보 또는 추세 불확실. 포지션을 추천하지 않습니다.", fg="yellow")
+            click.secho("불확실성 높음. 진입 신호가 발견되지 않았습니다. 대기합니다.", fg="yellow")
             return None
 
     except Exception as e:
