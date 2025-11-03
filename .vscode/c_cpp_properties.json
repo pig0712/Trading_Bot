@@ -1,0 +1,25 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "Codespaces",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "c17",
+      "intelliSenseMode": "linux-gcc-x64",
+      "includePath": [
+        "/home/codespace/.python/current/include/python3.12",
+        "${workspaceFolder}/.venv/lib/python3.12/site-packages/numpy/_core/include"
+      ],
+      "defines": [
+        "NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION"
+      ],
+      "browse": {
+        "path": [
+          "/home/codespace/.python/current/include/python3.12",
+          "${workspaceFolder}/.venv/lib/python3.12/site-packages/numpy/_core/include"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ]
+}

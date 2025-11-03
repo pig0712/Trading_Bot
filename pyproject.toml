@@ -1,0 +1,25 @@
+[project]
+name = "trading-bot"
+version = "0.1.0"
+description = "BTCUSDT 1m ingest + backtest skeleton (uv + pyproject)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "ccxt>=4.3.98",
+  "pandas>=2.2.2",
+  "pyarrow>=17.0.0",
+  "python-dateutil>=2.9.0",
+  "tqdm>=4.66.4",
+  "PyYAML>=6.0.2",
+]
+
+[tool.uv]
+# uv 기본 설정(필요시 확장)
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+# 로컬 패키지 경로를 명시해 hatch 빌드 에러 차단
+packages = ["src/trading_bot"]

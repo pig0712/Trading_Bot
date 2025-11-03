@@ -1,0 +1,8 @@
+backtest_core.c
+pyproject.toml
+setup.py
+/workspaces/Trading_Bot/src/native_ext/backtest_core.c
+btcore.egg-info/PKG-INFO
+btcore.egg-info/SOURCES.txt
+btcore.egg-info/dependency_links.txt
+btcore.egg-info/top_level.txt
