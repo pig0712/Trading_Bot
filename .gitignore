@@ -9,3 +9,4 @@ logs/
 uv.lock
 src/data/raw/*
 !src/data/raw/.gitkeep
+src/data/raw/BTCUSDT_2511031344.csv
