@@ -7,3 +7,5 @@ reports/
 logs/
 .venv/
 uv.lock
+src/data/raw/*
+!src/data/raw/.gitkeep
